@@ -1,11 +1,12 @@
 <section class="section profile">
   <div class="profile__container container">
     {{> Avatar title="John Doe" chageAvatar=true avatarUrl="/icon/avatar.svg"}}
-    {{> ProfileInput label="почта" profileInputValue="ya@ya.ru" profileInputType="email"}}
-    {{> ProfileInput label="логин" profileInputValue="login" profileInputType="text"}}
-    {{> ProfileInput label="имя" profileInputValue="John" profileInputType="text"}}
-    {{> ProfileInput label="фамилия" profileInputValue="Doe" profileInputType="text"}}
-    {{> ProfileInput label="телефон" profileInputValue="+5(666)1234567" profileInputType="phone"}}
+    {{> ProfileInput label="почта" profileInputValue="ya@ya.ru" profileInputType="email" profileInputName="email"}}
+    {{> ProfileInput label="логин" profileInputValue="login" profileInputType="text" profileInputName="login"}}
+    {{> ProfileInput label="имя" profileInputValue="John" profileInputType="text" profileInputName="first_name"}}
+    {{> ProfileInput label="фамилия" profileInputValue="Doe" profileInputType="text" profileInputName="second_name"}}
+    {{> ProfileInput label="имя в чате" profileInputValue="JohnDoe" profileInputType="text" profileInputName="display_name"}}
+    {{> ProfileInput label="телефон" profileInputValue="+5(666)1234567" profileInputType="phone" profileInputName="phone"}}
     <div class="profile__buttons">
       {{> ButtonForm class="primary-btn" text="Сохранить данные" type="button" page="profile"}}
     </div>
