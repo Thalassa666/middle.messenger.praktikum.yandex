@@ -1,0 +1,13 @@
+.header-body {
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #dedede;
+    margin-top: 10px;
+}
+
+.header-body__title {
+    font-size: 20px;
+    font-weight: bold;
+ }

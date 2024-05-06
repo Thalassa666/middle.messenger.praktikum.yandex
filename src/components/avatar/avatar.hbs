@@ -1,0 +1,13 @@
+<div class="avatar">
+  <div class="profile__avatar">
+    <img src="{{avatarUrl}}" alt="Аватар" class="user-avatar">
+    {{#if chageAvatar}}
+      <div class="profile__avatar_upload">
+        <p>Поменять аватар</p>
+      </div>
+    {{/if}}
+  </div>
+  {{#if title}}
+    <h2>{{title}}</h2>
+  {{/if}}
+</div>

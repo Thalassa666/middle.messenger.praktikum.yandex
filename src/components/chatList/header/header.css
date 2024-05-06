@@ -1,0 +1,37 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.header__search {
+    border: none;
+    border-radius: 10px;
+    background: #dedede;
+    height: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__search_input {
+    border: none;
+    border-radius: 10px;
+    background-color: #dedede;
+    text-align: center;
+    height: 30px;
+    width: 100%;
+}
+
+.header__profile-link {
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+    text-align: end;
+    color: slateblue;
+}
