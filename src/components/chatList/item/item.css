@@ -2,12 +2,12 @@
     display: flex;
     height: auto;
     gap: 15px;
-    border-top: 1px solid #dedede;
+    border-top: 1px solid var(--color-border);
     padding: 5px 10px;
 }
 
 .item--active {
-    background-color: #e1e1f3;
+    background-color: var(--color-active-item);
 }
 
 .item__img {
@@ -54,11 +54,11 @@
 .item__info_badge {
     font-size: 12px;
     text-align: center;
-    color: #ffffff;
+    color: var(--text-primary);
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: slateblue;
+    background-color: var(--color-primary);
     display: flex;
     justify-content: center;
     align-items: center;

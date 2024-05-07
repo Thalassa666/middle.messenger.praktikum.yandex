@@ -1,3 +1,13 @@
+:root {
+    --text-primary: #ffffff;
+    --text-secondary: black;
+    --color-primary: slateblue;
+    --color-secondary: #747bff;
+    --color-border: #dedede;
+    --color-active-item: #e1e1f3;
+    --color-shadow: #888888;
+}
+
 .section {
     display: flex;
     align-items: center;
@@ -12,15 +22,15 @@
     width: 500px;
     height: auto;
     padding: 40px;
-    border: 2px solid slateblue;
+    border: 2px solid var(--color-primary);
     border-radius: 10px;
-    box-shadow: 0 0 30px #888888;
+    box-shadow: 0 0 30px var(--color-shadow);
     box-sizing: border-box;
-    background: #747bff;
+    background: var(--color-secondary);
 }
 
 .title {
-    color: #ffffff;
+    color: var(--text-primary);
     font-size: 30px;
 }
 
@@ -40,17 +50,18 @@
 }
 
 .primary-btn:hover {
-    border: 2px solid slateblue;
+    border: 2px solid var(--color-primary);
 }
 
 .secondary-btn {
     border: none;
     background: transparent;
-    color: #ffffff;
+    color: var(--text-primary);
     cursor: pointer;
 }
 
 .secondary-btn:hover {
-    color: slateblue;
+    color: var(--color-primary);
 }
+
 

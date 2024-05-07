@@ -20,10 +20,10 @@
 
 .input:focus {
     outline: none;
-    border: 2px solid slateblue;
+    border: 2px solid var(--color-primary);
 }
 
 .login__title {
-    color: #ffffff;
+    color: var(--text-primary);
     font-size: 30px;
 }

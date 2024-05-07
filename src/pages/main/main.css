@@ -15,19 +15,19 @@
     width: 350px;
     height: auto;
     padding: 40px;
-    border: 2px solid slateblue;
+    border: 2px solid var(--color-primary);
     border-radius: 10px;
-    box-shadow: 0 0 30px #888888;
+    box-shadow: 0 0 30px var(--color-shadow);
     box-sizing: border-box;
-    background: #747bff;
+    background: var(--color-secondary);
 }
 
 a {
     font-size: 20px;
-    color: #ffffff;
+    color: var(--text-primary);
     cursor: pointer;
 }
 
 a:hover {
-    color: slateblue;
+    color: var(--color-primary);
 }

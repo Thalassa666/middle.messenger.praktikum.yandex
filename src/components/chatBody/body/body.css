@@ -15,6 +15,6 @@
 }
 
 .body__chat_title {
-    color: black;
+    color: var(--text-secondary);
     font-size: 40px;
 }

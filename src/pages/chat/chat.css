@@ -10,8 +10,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border-bottom: 1px solid #dedede;
-    border-top: 1px solid #dedede;
+    border-bottom: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border);
 }
 
 .chat__body {
