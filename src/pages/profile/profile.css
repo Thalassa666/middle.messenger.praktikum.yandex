@@ -1,0 +1,28 @@
+.profile-input {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    color: var(--text-primary);
+    width: 100%;
+}
+
+.profile-input__input {
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+}
+
+.profile-input__input:focus-visible {
+    outline: none;
+}
+
+.profile__buttons {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    margin-top: 30px;
+}
+

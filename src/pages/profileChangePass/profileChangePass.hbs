@@ -1,0 +1,13 @@
+<section class="profile section">
+  <div class="profile__container container">
+      <form class="profile__form">
+          {{> Avatar title="John Doe" chageAvatar=true avatarUrl="/icon/avatar.svg" name="avatar"}}
+          {{> ProfileInput label="старый пароль" profileInputType="password" profileInputValue="password" name="oldPassword"}}
+          {{> ProfileInput label="новый пароль" profileInputType="password" profileInputValue="password" name="newPassword"}}
+          {{> ProfileInput label="еще раз" profileInputType="password" profileInputValue="password" name="newPassword"}}
+          <div class="profile__buttons">
+              {{> ButtonForm class="primary-btn" text="Сохранить пароль" type="button" page="profile"}}
+          </div>
+      </form>
+  </div>
+</section>

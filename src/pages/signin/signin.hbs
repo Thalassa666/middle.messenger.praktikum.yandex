@@ -1,0 +1,16 @@
+<section class="signin section">
+  <div class="signin__container container">
+    <h1 class="signin__title title">Регистрация</h1>
+    <form class="signin__form form">
+      {{> InputForm type="email" name="email" placeholder="Почта"}}
+      {{> InputForm type="text" name="login" placeholder="Логин"}}
+      {{> InputForm type="text" name="first_name" placeholder="Имя"}}
+      {{> InputForm type="text" name="second_name" placeholder="Фамилия"}}
+      {{> InputForm type="phone" name="phone" placeholder="Телефон"}}
+      {{> InputForm type="password" name="password" placeholder="Пароль"}}
+      {{> InputForm type="password" name="password" placeholder="Пароль"}}
+      {{> ButtonForm class="primary-btn" text="Зарегистрироваться"}}
+      {{> ButtonForm class="secondary-btn" page="login" text="Войти"}}
+    </form>
+  </div>
+</section>
