@@ -1,4 +1,4 @@
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import '../profile/profile.css';
 import '../../style.css';
 import profileChangeTemplate from './profileChange.hbs?raw';
@@ -15,7 +15,7 @@ import {
     secondNameValidation
 } from "../../helpers/validation.ts";
 
-interface ProfileChangeProps {
+interface ProfileChangeProps extends BlockProps {
     title: string;
     avatarUrl: string;
     email: string;
@@ -26,7 +26,7 @@ interface ProfileChangeProps {
     phone: string;
 }
 
-class ProfileChange extends Block {
+class ProfileChange extends Block<ProfileChangeProps> {
     constructor(props: ProfileChangeProps) {
         super('div', props);
     }

@@ -1,5 +1,5 @@
 import './chat.css'
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import chatTemplate from './chat.hbs?raw';
 import Handlebars from 'handlebars';
 import ChatHeader from '../../components/chatList/header';
@@ -14,7 +14,7 @@ interface Message {
     isMine: boolean;
 }
 
-interface ChatItemProps {
+interface ChatItemProps extends BlockProps {
     title: string;
     text: string;
     image: string;
@@ -22,7 +22,7 @@ interface ChatItemProps {
     badge?: string;
     active?: boolean;
 }
-interface ChatProps {
+interface ChatProps extends BlockProps {
     chatItems: ChatItemProps[];
     bodyHeader: {
         title: string;
@@ -34,7 +34,7 @@ interface ChatProps {
     }
 }
 
-class Chat extends Block {
+class Chat extends Block<ChatProps> {
     constructor(props: ChatProps) {
         super('div', props);
     }

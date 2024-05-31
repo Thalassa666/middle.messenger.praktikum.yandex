@@ -1,15 +1,15 @@
-import Block from '../../helpers/block.ts';
+import Block, { BlockProps } from '../../helpers/block.ts';
 import './error.css';
 import '../../style.css';
 import ErrorPageTemplate from './error.hbs?raw';
 import ButtonForm from '../../components/button';
 
-interface ErrorPageProps {
+interface ErrorPageProps extends BlockProps {
     error: string;
     text: string;
 }
 
-class ErrorPage extends Block {
+class ErrorPage extends Block<ErrorPageProps> {
     constructor(props: ErrorPageProps) {
         super('div', props);
     }

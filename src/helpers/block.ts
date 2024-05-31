@@ -1,12 +1,12 @@
 import EventBus from './eventBus';
 
-interface BlockProps {
+export interface BlockProps {
     className?: string;
     handlers?: Record<string, EventListener>;
     [key: string]: unknown;
 }
 
-export default class Block<P extends BlockProps = any> {
+export default class Block<P extends BlockProps = BlockProps> {
     static EVENTS = {
         INIT: 'init',
         FLOW_CDM: 'flow:component-did-mount',
@@ -127,18 +127,17 @@ export default class Block<P extends BlockProps = any> {
     }
 
     private _makePropsProxy(props: P): P {
-        const self = this;
         return new Proxy(props, {
-            get(target: P, prop: string | symbol | number) {
+            get: (target, prop: string | symbol) => {
                 const value = target[prop as keyof P];
                 return typeof value === 'function' ? value.bind(target) : value;
             },
-            set(target: P, prop: string | symbol | number, value: any) {
-                target[prop as keyof P] = value;
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+            set: (target, prop: string | symbol, value: unknown) => {
+                target[prop as keyof P] = value as P[keyof P];
+                this.eventBus().emit(Block.EVENTS.FLOW_CDU, { oldProps: target, newProps: target });
                 return true;
             },
-            deleteProperty() {
+            deleteProperty: () => {
                 throw new Error('Нет доступа');
             }
         });

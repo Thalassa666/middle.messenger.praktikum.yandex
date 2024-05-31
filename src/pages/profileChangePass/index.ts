@@ -1,4 +1,4 @@
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import '../profile/profile.css';
 import '../../style.css';
 import profileChangePassTemplate from './profileChangePass.hbs?raw';
@@ -9,14 +9,14 @@ import ButtonForm from '../../components/button';
 import { getFormData } from "../../helpers/getFormData.ts";
 import { passwordValidation } from "../../helpers/validation.ts";
 
-interface ProfileChangePassProps {
+interface ProfileChangePassProps extends BlockProps {
     title: string;
     avatarUrl: string;
     oldPassword: string;
     newPassword: string;
 }
 
-class ProfileChangePass extends Block {
+class ProfileChangePass extends Block<ProfileChangePassProps> {
     constructor(props: ProfileChangePassProps) {
         super('div', props);
     }

@@ -16,14 +16,15 @@ const pages = {
 };
 
 Object.entries(Components).forEach(([name, Component]) => {
-    Handlebars.registerPartial(name, (props: any) => new Component(props).render());
+    //@ts-expect-error (типизация контекста)
+    Handlebars.registerPartial(name, (props: unknown) => new Component(props).render());
 });
 
 export type PageName = keyof typeof pages;
 
 function renderPage<T extends PageName>(pageName: T, context: PageContextType[T]) {
     const PageClass = pages[pageName];
-    // @ts-ignore
+ //@ts-expect-error (типизация контекста)
     const pageInstance = new PageClass(context);
 
     const appElement = document.getElementById('app');

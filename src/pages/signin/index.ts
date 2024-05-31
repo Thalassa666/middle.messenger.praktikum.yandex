@@ -1,6 +1,6 @@
 import './signin.css';
 import '../../style.css';
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import signinPageTemplate from './signin.hbs?raw';
 import Handlebars from 'handlebars';
 import InputForm from '../../components/input';
@@ -14,7 +14,7 @@ import {
     secondNameValidation
 } from "../../helpers/validation.ts";
 
-interface SigninPageProps {
+interface SigninPageProps extends BlockProps {
     emailPlaceholder: string;
     loginPlaceholder: string;
     firstNamePlaceholder: string;
@@ -24,7 +24,7 @@ interface SigninPageProps {
     confirmPasswordPlaceholder: string;
 }
 
-class SigninPage extends Block {
+class SigninPage extends Block<SigninPageProps> {
     constructor(props: SigninPageProps) {
         super('div', props);
     }

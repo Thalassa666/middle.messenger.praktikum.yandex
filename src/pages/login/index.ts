@@ -1,4 +1,4 @@
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import'./login.css';
 import loginPageTemplate from './login.hbs?raw';
 import Handlebars from 'handlebars';
@@ -7,12 +7,12 @@ import ButtonForm from '../../components/button';
 import { getFormData } from "../../helpers/getFormData.ts";
 import { loginValidation, passwordValidation } from "../../helpers/validation.ts";
 
-interface LoginPageProps {
+interface LoginPageProps extends BlockProps {
     loginPlaceholder: string;
     passwordPlaceholder: string;
 }
 
-class LoginPage extends Block {
+class LoginPage extends Block<LoginPageProps> {
     constructor(props: LoginPageProps) {
         super('div', props);
     }

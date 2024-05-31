@@ -1,6 +1,6 @@
 export function firstNameValidation(event: { target: HTMLInputElement }) {
     const firstNameValue = event.target.value.trim();
-    const namePattern = /^[А-ЯЁA-Z][а-яёa-z\-]*$/;
+    const namePattern = /^[А-ЯЁA-Z][а-яёa-z]*$/;
 
     if (!namePattern.test(firstNameValue)) {
         showError(event.target, 'Имя должно начинаться с заглавной буквы, содержать только латинские или кириллические символы, дефис и не содержать цифры.');
@@ -11,7 +11,7 @@ export function firstNameValidation(event: { target: HTMLInputElement }) {
 
 export function secondNameValidation(event: { target: HTMLInputElement }) {
     const firstNameValue = event.target.value.trim();
-    const namePattern = /^[А-ЯЁA-Z][а-яёa-z\-]*$/;
+    const namePattern = /^[А-ЯЁA-Z][а-яёa-z]*$/;
 
     if (!namePattern.test(firstNameValue)) {
         showError(event.target, 'Фамилия должна начинаться с заглавной буквы, содержать только латинские или кириллические символы, дефис и не содержать цифры.');

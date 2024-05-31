@@ -1,15 +1,15 @@
 import './avatar.css';
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import AvatarTemplate from './avatar.hbs?raw';
 
-interface AvatarProps {
+export interface AvatarProps extends BlockProps {
     name: string;
     title: string;
     avatarUrl: string;
     changeAvatar?: boolean;
 }
 
-class Avatar extends Block {
+class Avatar extends Block<AvatarProps> {
     constructor(props: AvatarProps) {
         super('avatar', props);
     }

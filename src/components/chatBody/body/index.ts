@@ -1,5 +1,5 @@
 import './body.css';
-import Block from '../../../helpers/block';
+import Block, { BlockProps } from '../../../helpers/block';
 import chatBodyTemplate from './body.hbs?raw';
 import Handlebars from 'handlebars';
 
@@ -8,12 +8,12 @@ interface Message {
     isMine: boolean;
 }
 
-interface ChatBodyProps {
+export interface ChatBodyProps extends BlockProps {
     date: string;
     messages: Message[];
 }
 
-class ChatBody extends Block {
+class ChatBody extends Block<ChatBodyProps> {
     constructor(props: ChatBodyProps) {
         super('div', props);
     }

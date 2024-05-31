@@ -1,4 +1,4 @@
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import './profile.css';
 import '../../style.css';
 import ProfileTemplate from './profile.hbs?raw';
@@ -7,7 +7,7 @@ import ProfileInput from '../../components/profileInput';
 import ButtonForm from '../../components/button';
 import Handlebars from 'handlebars';
 
-interface ProfilePageProps {
+interface ProfilePageProps extends BlockProps {
     title: string;
     avatarUrl: string;
     email: string;
@@ -17,7 +17,7 @@ interface ProfilePageProps {
     phone: string;
 }
 
-class ProfilePage extends Block {
+class ProfilePage extends Block<ProfilePageProps> {
     constructor(props: ProfilePageProps) {
         super('div', props);
     }

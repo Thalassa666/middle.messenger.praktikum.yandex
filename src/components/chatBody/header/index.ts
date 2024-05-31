@@ -1,14 +1,14 @@
 import './header.css'
-import Block from '../../../helpers/block';
+import Block, { BlockProps } from '../../../helpers/block';
 import bodyHeaderTemplate from './header.hbs?raw';
 import Handlebars from 'handlebars';
 
-interface BodyHeaderProps {
+export interface BodyHeaderProps extends BlockProps {
     image: string;
     title: string;
 }
 
-class BodyHeader extends Block {
+class BodyHeader extends Block<BodyHeaderProps> {
     constructor(props: BodyHeaderProps) {
         super('div', props);
     }

@@ -1,14 +1,14 @@
 import './header.css'
-import Block from '../../../helpers/block.ts';
+import Block, { BlockProps } from '../../../helpers/block.ts';
 import headerTemplate from './header.hbs?raw';
 import Handlebars from 'handlebars';
 
-interface HeaderProps {
+export interface HeaderProps extends BlockProps {
     inputId: string;
     inputName: string;
 }
 
-class Header extends Block {
+class Header extends Block<BlockProps> {
     constructor(props: HeaderProps) {
         super('div', props);
     }

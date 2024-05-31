@@ -1,14 +1,14 @@
 import './message.css';
-import Block from '../../../helpers/block';
+import Block, { BlockProps } from '../../../helpers/block';
 import chatMessageTemplate from './message.hbs?raw';
 import Handlebars from 'handlebars';
 
-interface ChatMessageProps {
+export interface ChatMessageProps extends BlockProps {
     attachIconSrc: string;
     sendIconSrc: string;
 }
 
-class ChatMessage extends Block {
+class ChatMessage extends Block<ChatMessageProps> {
     constructor(props: ChatMessageProps) {
         super('div', props);
     }

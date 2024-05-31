@@ -1,14 +1,14 @@
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import inputFormTemplate from './input.hbs?raw';
 import Handlebars from 'handlebars';
 
-interface InputFormProps {
+export interface InputFormProps extends BlockProps {
     type: string;
     name: string;
     placeholder: string;
 }
 
-class InputForm extends Block {
+class InputForm extends Block<InputFormProps> {
     constructor(props: InputFormProps) {
         super('div', props);
     }

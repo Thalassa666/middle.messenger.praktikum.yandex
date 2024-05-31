@@ -1,8 +1,8 @@
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import ButtonFormTemplate from './button.hbs?raw';
 import Handlebars from 'handlebars';
 
-export interface ButtonFormProps {
+export interface ButtonFormProps extends BlockProps {
     class: string;
     type: string;
     page?: string;
@@ -10,7 +10,7 @@ export interface ButtonFormProps {
     handlers?: Record<string, (event: Event) => void>;
 }
 
-class ButtonForm extends Block {
+class ButtonForm extends Block<ButtonFormProps> {
     constructor(props: ButtonFormProps) {
         super('button', props);
     }

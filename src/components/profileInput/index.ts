@@ -1,8 +1,8 @@
-import Block from '../../helpers/block';
+import Block, { BlockProps } from '../../helpers/block';
 import ProfileInputTemplate from './profileInput.hbs?raw';
 import Handlebars from 'handlebars';
 
-interface ProfileInputProps {
+export interface ProfileInputProps extends BlockProps {
     label: string;
     profileInputValue: string;
     profileInputType?: string;
@@ -10,7 +10,7 @@ interface ProfileInputProps {
     name: string;
 }
 
-class ProfileInput extends Block {
+class ProfileInput extends Block<ProfileInputProps> {
     constructor(props: ProfileInputProps) {
         super('div', props);
     }
