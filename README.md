@@ -30,7 +30,7 @@
 https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?type=design&node-id=0-1&mode=design&t=5aIcwy4cHSC6L2RF-0
 
 ### Netlify
-magical-kringle-657e59.netlify.app
+https://magical-kringle-657e59.netlify.app
 
 ### Технологии
 - handlebars
