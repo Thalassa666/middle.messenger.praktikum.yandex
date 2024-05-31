@@ -11,7 +11,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "start": "tsc && vite build && node server.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:styles": "stylelint 'src/**/*.css'"
   },
   "devDependencies": {
     "@eslint/js": "^9.2.0",

@@ -1,11 +1,11 @@
 :root {
-    --text-primary: #ffffff;
+    --text-primary: #fff;
     --text-secondary: black;
     --color-primary: slateblue;
     --color-secondary: #747bff;
     --color-border: #dedede;
     --color-active-item: #e1e1f3;
-    --color-shadow: #888888;
+    --color-shadow: #888;
 }
 
 .section {
