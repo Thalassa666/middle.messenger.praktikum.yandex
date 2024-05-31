@@ -9,12 +9,23 @@
 
 .body__date {
     display: flex;
+    justify-content: center;
+    width: 100%;
     padding: 20px 0;
-    align-items: center;
-    text-align: center;
 }
 
-.body__chat_title {
-    color: var(--text-secondary);
-    font-size: 40px;
+.body__chat {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.body__chat_message {
+    display: flex;
+    justify-content: start;
+    margin: 10px 0;
+}
+
+.body__chat_message--right {
+    justify-content: end;
 }

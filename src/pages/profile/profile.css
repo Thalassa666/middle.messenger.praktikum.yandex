@@ -1,5 +1,6 @@
 .profile-input {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     padding: 10px;
     color: var(--text-primary);
@@ -24,5 +25,12 @@
     gap: 5px;
     flex-direction: column;
     margin-top: 30px;
+}
+
+.input-error-message {
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-align: left;
+    padding: 5px 0;
 }
 

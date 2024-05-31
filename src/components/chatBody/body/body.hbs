@@ -1,6 +1,10 @@
 <section class="body">
-  <div class="body__date">06 марта</div>
-  <div class="body__chat">
-    <h2 class="body__chat_title">Тут будет чат</h2>
-  </div>
+    <div class="body__date">{{date}}</div>
+    <div class="body__chat">
+        {{#each messages}}
+            <div class="body__chat_message {{#if this.isMine}}body__chat_message--right{{/if}}">
+                <div class="message__content">{{this.text}}</div>
+            </div>
+        {{/each}}
+    </div>
 </section>

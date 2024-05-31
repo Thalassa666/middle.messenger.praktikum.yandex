@@ -1,19 +1,11 @@
 <section class="chat">
-  <div class="chat__list">
-    {{> ChatHeader }}
-    {{> ChatItem title="Jane Doe" text="Привет, как дела?" image="/icon/icon.svg" date="15:30" badge="3"}}
-    {{> ChatItem title="Колян" text="Займи денег плиз" image="/icon/icon.svg" date="10:01"}}
-    {{> ChatItem title="Петя" text="Бро го катку" image="/icon/icon.svg" date="Пт" active=true}}
-    {{> ChatItem title="Автомеханик" text="Здравствуйте, вы звонили по поводу ремонта? Перезвоните" image="/icon/icon.svg" date="Чт" badge="1"}}
-    {{> ChatItem title="Мама" text="Вы: Стикер" image="/icon/icon.svg" date="Ср"}}
-    {{> ChatItem title="Лена" text="Вы: Привет" image="/icon/icon.svg" date="Вт"}}
-    {{> ChatItem title="Mary" text="Вы: Стикер" image="/icon/icon.svg" date="Пн"}}
-    {{> ChatItem title="SpiderMan" text="Стикер" image="/icon/icon.svg" date="Пн"}}
-    {{> ChatItem title="Оля" text="Ок" image="/icon/icon.svg" date="Пн"}}
-  </div>
-  <div class="chat__body">
-    {{> BodyHeader title="Петя" image="/icon/icon.svg"}}
-    {{> ChatBody }}
-    {{> ChatMessage }}
-  </div>
+    <div class="chat__list">
+        {{{ChatHeader}}}
+        {{{ChatItems}}}
+    </div>
+    <div class="chat__body">
+        {{{BodyHeader}}}
+        {{{ChatBody}}}
+        {{{ChatMessage}}}
+    </div>
 </section>

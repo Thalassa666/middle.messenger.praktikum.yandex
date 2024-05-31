@@ -1,2 +1,9 @@
-export { ChatHeader } from './header';
-export { ChatItem } from './item';
+import ChatHeader from './header';
+import ChatItem from './item';
+
+export {
+    ChatItem,
+    ChatHeader,
+}
+
+

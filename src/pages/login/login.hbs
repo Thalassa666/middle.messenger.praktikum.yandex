@@ -1,11 +1,11 @@
 <section class="section login">
-  <div class="container login__container">
-    <h1 class="login__title">Вход</h1>
-    <form class="login__form">
-      {{> InputForm type="text" name="login" placeholder="Логин"}}
-      {{> InputForm type="password" name="password" placeholder="Пароль"}}
-      {{> ButtonForm class="primary-btn" text="Войти" type="button" page="chat"}}
-      {{> ButtonForm class="secondary-btn" text="Зарегистрироваться" type="button" page="signin"}}
-    </form>
-  </div>
+    <div class="container login__container">
+        <h1 class="login__title">Вход</h1>
+        <form class="login__form">
+            {{{InputLogin}}}
+            {{{InputPassword}}}
+            {{{LoginButton}}}
+            {{{SignupButton}}}
+        </form>
+    </div>
 </section>

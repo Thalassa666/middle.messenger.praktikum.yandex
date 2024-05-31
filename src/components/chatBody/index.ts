@@ -1,3 +1,9 @@
-export { BodyHeader } from './header';
-export { ChatBody } from './body';
-export { ChatMessage } from './message';
+import BodyHeader from './header';
+import ChatBody from './body';
+import ChatMessage from './message';
+
+export {
+    BodyHeader,
+    ChatBody,
+    ChatMessage,
+}

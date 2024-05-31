@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
-import * as Pages from './pages/index.ts';
+import * as Pages from './pages';
+import { pageContexts, PageContextType } from './pageContext.ts';
 
 const pages = {
     main: Pages.MainPage,
@@ -14,62 +15,50 @@ const pages = {
     chat: Pages.Chat,
 };
 
-const pageContexts: Record<PageName, Record<string, any>> = {
-    main: {},
-    login: {
-        page: "signin",
-    },
-    signin: {
-        page: "login",
-    },
-    error404: {
-        error: "404",
-        text: "Не туда попали",
-        page: "main",
-    },
-    error500: {
-        error: "500",
-        text: "Мы уже чиним!",
-        page: "main",
-    },
-    profile: {
-        avatarUrl: "/icon/avatar.svg",
-    },
-    profileChange: {},
-    profileChangePass: {},
-    chat: {},
-};
-
-Object.entries(Components).forEach(([ name, component ]) => {
-    Handlebars.registerPartial(name, component);
+Object.entries(Components).forEach(([name, Component]) => {
+    Handlebars.registerPartial(name, (props: any) => new Component(props).render());
 });
 
-type PageName = keyof typeof pages;
+export type PageName = keyof typeof pages;
 
-function renderPage(pageName: PageName, context: Record<string, any> = {}) {
-    const template = Handlebars.compile(pages[pageName]);
-    const html = template(context);
+function renderPage<T extends PageName>(pageName: T, context: PageContextType[T]) {
+    const PageClass = pages[pageName];
+    // @ts-ignore
+    const pageInstance = new PageClass(context);
 
     const appElement = document.getElementById('app');
     if (appElement) {
-        appElement.innerHTML = html;
+        appElement.innerHTML = '';
+        appElement.appendChild(pageInstance.getContent());
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => renderPage('main'));
+function handleHashChange() {
+    const hash = window.location.hash.substring(1) as PageName;
+    if (pages[hash]) {
+        renderPage(hash, pageContexts[hash]);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+});
+
+document.addEventListener('DOMContentLoaded', () => renderPage('main', pageContexts.main));
 
 document.addEventListener('click', function(event) {
     const target = event.target as HTMLElement;
     if (target && target.tagName === 'A' && target.getAttribute('page')) {
         event.preventDefault();
         const pageName = target.getAttribute('page') as PageName;
-
-        const context = pageContexts[pageName] || {};
-        renderPage(pageName, context);
+        window.location.hash = `#${pageName}`;
     }
-    if (target && target.tagName === 'BUTTON' && target.getAttribute('data-page')) {
+    /*if (target && target.tagName === 'BUTTON' && target.getAttribute('data-page')) {
         event.preventDefault();
         const pageName = target.getAttribute('data-page') as PageName;
-        renderPage(pageName);
-    }
+
+        const newContext = { ...currentContext, ...pageContexts[pageName] };
+        renderPage(pageName, newContext);
+    }*/
 });
