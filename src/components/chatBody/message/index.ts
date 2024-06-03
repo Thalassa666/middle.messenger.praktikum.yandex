@@ -1,7 +1,8 @@
 import './message.css';
 import Block, { BlockProps } from '../../../helpers/block';
 import chatMessageTemplate from './message.hbs?raw';
-import Handlebars from 'handlebars';
+import ButtonForm from "../../button";
+import InputForm from "../../../components/input";
 
 export interface ChatMessageProps extends BlockProps {
     attachIconSrc: string;
@@ -10,16 +11,30 @@ export interface ChatMessageProps extends BlockProps {
 
 class ChatMessage extends Block<ChatMessageProps> {
     constructor(props: ChatMessageProps) {
-        super('div', props);
+        super('div', {
+            ...props,
+            Message: new InputForm({
+                name: 'message',
+                type: 'text',
+                placeholder: 'сообщение',
+                className: 'message__form_input',
+            }),
+            SendButton: new ButtonForm({
+                text: '',
+                img: '/icon/arrow.svg',
+                className: 'message__form_btn',
+                events: {
+                    click: (event: Event) => {
+                        event.preventDefault();
+
+                    }
+                }
+            })
+        });
     }
 
-    render(): string {
-        const { attachIconSrc, sendIconSrc } = this.props;
-        const template = Handlebars.compile(chatMessageTemplate);
-        return template({
-            attachIconSrc,
-            sendIconSrc,
-        });
+    render(): DocumentFragment {
+        return this.compile(chatMessageTemplate, this.props);
     }
 }
 

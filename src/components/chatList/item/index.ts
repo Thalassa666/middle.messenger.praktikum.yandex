@@ -1,7 +1,6 @@
 import './item.css'
 import Block, { BlockProps } from '../../../helpers/block';
 import itemTemplate from './item.hbs?raw';
-import Handlebars from 'handlebars';
 
 export interface ItemProps extends BlockProps {
     active?: boolean;
@@ -17,9 +16,8 @@ class Item extends Block<ItemProps> {
         super('div', props);
     }
 
-    render(): string {
-        const template = Handlebars.compile(itemTemplate);
-        return template(this.props);
+    render(): DocumentFragment {
+        return this.compile(itemTemplate, this.props);
     }
 }
 

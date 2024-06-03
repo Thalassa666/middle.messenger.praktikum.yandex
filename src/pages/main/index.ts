@@ -7,8 +7,8 @@ class MainPage extends Block {
         super('div', {});
     }
 
-    render(): string {
-        return MainPageTemplate;
+    render(): DocumentFragment {
+        return this.compile(MainPageTemplate, this.props);
     }
 }
 

@@ -16,6 +16,7 @@
     padding: 6px;
     border: 2px solid transparent;
     border-radius: 4px;
+    width: 400px;
 }
 
 .input:focus {
@@ -38,4 +39,6 @@
     text-align: left;
     padding: 5px;
 }
+
+
 

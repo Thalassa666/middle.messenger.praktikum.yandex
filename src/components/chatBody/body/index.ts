@@ -1,7 +1,6 @@
 import './body.css';
 import Block, { BlockProps } from '../../../helpers/block';
 import chatBodyTemplate from './body.hbs?raw';
-import Handlebars from 'handlebars';
 
 interface Message {
     text: string;
@@ -18,9 +17,8 @@ class ChatBody extends Block<ChatBodyProps> {
         super('div', props);
     }
 
-    render(): string {
-        const template = Handlebars.compile(chatBodyTemplate);
-        return template(this.props);
+    render(): DocumentFragment {
+        return this.compile(chatBodyTemplate, this.props);
     }
 }
 

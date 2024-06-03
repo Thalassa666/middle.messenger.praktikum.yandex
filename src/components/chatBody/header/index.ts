@@ -1,7 +1,6 @@
 import './header.css'
 import Block, { BlockProps } from '../../../helpers/block';
 import bodyHeaderTemplate from './header.hbs?raw';
-import Handlebars from 'handlebars';
 
 export interface BodyHeaderProps extends BlockProps {
     image: string;
@@ -13,9 +12,8 @@ class BodyHeader extends Block<BodyHeaderProps> {
         super('div', props);
     }
 
-    render(): string {
-        const template = Handlebars.compile(bodyHeaderTemplate);
-        return template(this.props);
+    render(): DocumentFragment {
+        return this.compile(bodyHeaderTemplate, this.props);
     }
 }
 

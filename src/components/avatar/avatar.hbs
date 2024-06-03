@@ -1,9 +1,14 @@
 <div class="avatar">
   <div class="profile__avatar">
     <img src="{{avatarUrl}}" alt="Аватар профиля" class="user-avatar">
-      <div class="profile__avatar_upload" name="{{name}}">
-        <p>Поменять аватар</p>
-      </div>
+      {{#if changeAvatar}}
+          <label for="avatarInput">
+              <div class="profile__avatar_upload" name="{{name}}">
+                  <p>Поменять аватар</p>
+              </div>
+          </label>
+            <input type="file" id="avatarInput" class="profile__avatar_input">
+      {{/if}}
   </div>
     <h2 class="profile__avatar_title">{{title}}</h2>
 </div>

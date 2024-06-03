@@ -1,15 +1,13 @@
 import './chat.css'
 import Block, { BlockProps } from '../../helpers/block';
 import chatTemplate from './chat.hbs?raw';
-import Handlebars from 'handlebars';
 import ChatHeader from '../../components/chatList/header';
 import ChatItem from '../../components/chatList/item';
 import BodyHeader from '../../components/chatBody/header';
 import ChatBody from '../../components/chatBody/body';
 import ChatMessage from '../../components/chatBody/message';
-import { messageValidation } from '../../helpers/validation.ts';
 
-interface Message {
+interface Message extends BlockProps {
     text: string;
     isMine: boolean;
 }
@@ -36,62 +34,34 @@ interface ChatProps extends BlockProps {
 
 class Chat extends Block<ChatProps> {
     constructor(props: ChatProps) {
-        super('div', props);
-    }
+        const chatItems = props.chatItems.map(item => new ChatItem(item));
 
-    componentDidMount(): boolean {
-        setTimeout(() => {
-            const form = this.element.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', this.handleSubmit.bind(this));
-            }
-        }, 0);
-        return true;
-    }
+        const compiledChatItems = chatItems.map(item => item.getContent()?.outerHTML).join('');
 
-    handleSubmit(event: Event) {
-        event.preventDefault();
-
-        const target = event.target as HTMLFormElement;
-        const messageInput = target.querySelector('input[name="message"]') as HTMLInputElement;
-
-        if (messageInput) {
-            messageValidation({ target: messageInput });
-        }
-
-        const isMessageValid = !messageInput?.classList.contains('input-error');
-
-        if (isMessageValid) {
-            const formData = new FormData(target);
-            const messageData = Object.fromEntries(formData.entries());
-            console.log('MessageData:', messageData);
-            messageInput.value = '';
-        } else {
-            console.log('Validation error, message not sent.');
-        }
-    }
-
-    render(): string {
-        const chatHeader = new ChatHeader({ inputId: 'search', inputName: 'search' });
-        const chatItems = this.props.chatItems.map((item: ChatItemProps) => {
-            return new ChatItem(item).render();
-        }).join('');
-        const bodyHeader = new BodyHeader(this.props.bodyHeader);
-        const chatBody = new ChatBody(this.props.chatBody);
-        const chatMessage = new ChatMessage({
-            attachIconSrc: '/icon/attach_file.svg',
-            sendIconSrc: '/icon/arrow.svg',
+        super('div', {
+            ...props,
+            ChatHeader: new ChatHeader({
+                inputId: 'search',
+                inputName: 'search'
+            }),
+            ChatItems: compiledChatItems,
+            BodyHeader: new BodyHeader({
+                image: props.bodyHeader.image,
+                title: props.bodyHeader.title,
+            }),
+            ChatBody: new ChatBody({
+                date: props.chatBody.date,
+                messages: [...props.chatBody.messages],
+            }),
+            ChatMessage: new ChatMessage({
+                attachIconSrc: '/icon/attach_file.svg',
+                sendIconSrc: '/icon/arrow.svg',
+            })
         });
+    }
 
-        const template = Handlebars.compile(chatTemplate);
-
-        return template({
-            ChatHeader: chatHeader.render(),
-            ChatItems: chatItems,
-            BodyHeader: bodyHeader.render(),
-            ChatBody: chatBody.render(),
-            ChatMessage: chatMessage.render(),
-        });
+    render(): DocumentFragment {
+        return this.compile(chatTemplate, this.props);
     }
 }
 

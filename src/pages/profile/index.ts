@@ -5,7 +5,6 @@ import ProfileTemplate from './profile.hbs?raw';
 import Avatar from '../../components/avatar';
 import ProfileInput from '../../components/profileInput';
 import ButtonForm from '../../components/button';
-import Handlebars from 'handlebars';
 
 interface ProfilePageProps extends BlockProps {
     title: string;
@@ -19,20 +18,85 @@ interface ProfilePageProps extends BlockProps {
 
 class ProfilePage extends Block<ProfilePageProps> {
     constructor(props: ProfilePageProps) {
-        super('div', props);
-    }
-
-    componentDidMount(): boolean {
-        setTimeout(() => {
-            this.addEventListeners();
-        }, 0);
-        return true;
-    }
-
-    addEventListeners(): void {
-        const buttons = this.element.querySelectorAll('button');
-        buttons.forEach(button => {
-            button.addEventListener('click', this.handleButtonClick.bind(this));
+        super('div', {
+            ...props,
+            Avatar: new Avatar({
+                title: props.title,
+                avatarUrl: props.avatarUrl,
+                name: 'Avatar',
+                changeAvatar: false,
+            }),
+            EmailInput: new ProfileInput({
+                label: 'почта',
+                profileInputValue: props.email,
+                isReadOnly: true,
+                name: 'email',
+                profileInputType: 'email',
+            }),
+            LoginInput: new ProfileInput({
+                label: 'логин',
+                profileInputValue: props.login,
+                isReadOnly: true,
+                name: 'login',
+                profileInputType: 'text',
+            }),
+            FirstNameInput: new ProfileInput({
+                label: 'имя',
+                profileInputValue: props.first_name,
+                isReadOnly: true,
+                name: 'first_name',
+                profileInputType: 'text',
+            }),
+            SecondNameInput: new ProfileInput({
+                label: 'фамилия',
+                profileInputValue: props.second_name,
+                isReadOnly: true,
+                name: 'second_name',
+                profileInputType: 'text',
+            }),
+            PhoneInput: new ProfileInput({
+                label: 'телефон',
+                profileInputValue: props.phone,
+                isReadOnly: true,
+                name: 'phone',
+                profileInputType: 'phone',
+            }),
+            ChangeDataButton: new ButtonForm({
+                className: 'secondary-btn',
+                text: 'Изменить данные',
+                type: 'button',
+                page: 'profileChange',
+                events: {
+                    click: (event: Event) => {
+                        event.preventDefault();
+                        this.handleButtonClick(event);
+                    }
+                }
+            }),
+            ChangePassButton: new ButtonForm({
+                className: 'secondary-btn',
+                text: 'Сменить пароль',
+                type: 'button',
+                page: 'profileChangePass',
+                events: {
+                    click: (event: Event) => {
+                        event.preventDefault();
+                        this.handleButtonClick(event);
+                    }
+                }
+            }),
+            LogoutButton: new ButtonForm({
+                className: 'secondary-btn',
+                text: 'Выйти',
+                type: 'button',
+                page: 'login',
+                events: {
+                    click: (event: Event) => {
+                        event.preventDefault();
+                        this.handleButtonClick(event);
+                    }
+                }
+            })
         });
     }
 
@@ -44,33 +108,8 @@ class ProfilePage extends Block<ProfilePageProps> {
         }
     }
 
-    render(): string {
-        const { title, avatarUrl, email, login, first_name, second_name, phone } = this.props;
-
-        const avatar = new Avatar({ title, avatarUrl, name: 'avatar' });
-        const emailInput = new ProfileInput({ label: 'почта', profileInputValue: email, isReadOnly: true, name: 'email', profileInputType: 'email' });
-        const loginInput = new ProfileInput({ label: 'логин', profileInputValue: login, isReadOnly: true, name: 'login', profileInputType: 'text' });
-        const firstNameInput = new ProfileInput({ label: 'имя', profileInputValue: first_name, isReadOnly: true, name: 'first_name', profileInputType: 'text' });
-        const secondNameInput = new ProfileInput({ label: 'фамилия', profileInputValue: second_name, isReadOnly: true, name: 'second_name', profileInputType: 'text' });
-        const phoneInput = new ProfileInput({ label: 'телефон', profileInputValue: phone, isReadOnly: true, name: 'phone', profileInputType: 'phone' });
-
-        const changeDataButton = new ButtonForm({ class: 'secondary-btn', text: 'Изменить данные', type: 'button', page: 'profileChange' });
-        const changePassButton = new ButtonForm({ class: 'secondary-btn', text: 'Сменить пароль', type: 'button', page: 'profileChangePass' });
-        const logoutButton = new ButtonForm({ class: 'secondary-btn', text: 'Выйти', type: 'button', page: 'login' });
-
-        const template = Handlebars.compile(ProfileTemplate);
-
-        return template({
-            Avatar: avatar.render(),
-            EmailInput: emailInput.render(),
-            LoginInput: loginInput.render(),
-            FirstNameInput: firstNameInput.render(),
-            SecondNameInput: secondNameInput.render(),
-            PhoneInput: phoneInput.render(),
-            ChangeDataButton: changeDataButton.render(),
-            ChangePassButton: changePassButton.render(),
-            LogoutButton: logoutButton.render(),
-        });
+    render(): DocumentFragment {
+        return this.compile(ProfileTemplate, this.props);
     }
 }
 

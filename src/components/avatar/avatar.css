@@ -31,3 +31,7 @@
 .profile__avatar:hover .profile__avatar_upload {
     display: flex;
 }
+
+.profile__avatar_input {
+    display: none;
+}

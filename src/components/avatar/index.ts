@@ -13,12 +13,8 @@ class Avatar extends Block<AvatarProps> {
     constructor(props: AvatarProps) {
         super('avatar', props);
     }
-    render(): string {
-        const { name, title, avatarUrl } = this.props;
-        return AvatarTemplate
-            .replace('{{name}}', name)
-            .replace('{{title}}', title)
-            .replace('{{avatarUrl}}', avatarUrl)
+    render(): DocumentFragment {
+        return this.compile(AvatarTemplate, this.props);
     }
 }
 

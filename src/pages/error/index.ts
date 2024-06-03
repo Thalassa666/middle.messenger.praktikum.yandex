@@ -1,7 +1,7 @@
 import Block, { BlockProps } from '../../helpers/block.ts';
 import './error.css';
 import '../../style.css';
-import ErrorPageTemplate from './error.hbs?raw';
+import errorPageTemplate from './error.hbs?raw';
 import ButtonForm from '../../components/button';
 
 interface ErrorPageProps extends BlockProps {
@@ -9,42 +9,23 @@ interface ErrorPageProps extends BlockProps {
     text: string;
 }
 
-class ErrorPage extends Block<ErrorPageProps> {
+export default class ErrorPage extends Block<ErrorPageProps> {
     constructor(props: ErrorPageProps) {
-        super('div', props);
-    }
-
-    componentDidMount(): boolean {
-        setTimeout(() => {
-            const backButton = this.element.querySelector('button[data-page="main"]');
-            if (backButton) {
-                backButton.addEventListener('click', this.handleLoginClick);
-            }
-        }, 0);
-        return true;
-    }
-
-    handleLoginClick() {
-        window.location.hash = '#main';
-    }
-
-    render(): string {
-        const { error, text } = this.props;
-
-        const backButton = new ButtonForm({
-            class: 'secondary-btn',
-            type: 'button',
-            text: 'Назад',
-            page: 'main'
+        super('div', {
+            ...props,
+            ButtonForm: new ButtonForm({
+                className: 'secondary-btn',
+                type: 'button',
+                text: 'Назад',
+                page: 'main',
+                events: {
+                    click: () => window.location.hash = `#main`
+                }
+            }),
         });
+    }
 
-        const buttonHtml = backButton.render();
-
-        return ErrorPageTemplate
-            .replace('{{error}}', error)
-            .replace('{{text}}', text)
-            .replace('{{> ButtonForm }}', buttonHtml);
+    render(): DocumentFragment {
+        return this.compile(errorPageTemplate, this.props);
     }
 }
-
-export default ErrorPage;

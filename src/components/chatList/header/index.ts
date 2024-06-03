@@ -1,7 +1,6 @@
 import './header.css'
 import Block, { BlockProps } from '../../../helpers/block.ts';
 import headerTemplate from './header.hbs?raw';
-import Handlebars from 'handlebars';
 
 export interface HeaderProps extends BlockProps {
     inputId: string;
@@ -13,9 +12,8 @@ class Header extends Block<BlockProps> {
         super('div', props);
     }
 
-    render(): string {
-        const template = Handlebars.compile(headerTemplate);
-        return template(this.props);
+    render(): DocumentFragment {
+        return this.compile(headerTemplate, this.props);
     }
 }
 

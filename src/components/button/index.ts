@@ -1,24 +1,21 @@
-import Block, { BlockProps } from '../../helpers/block';
-import ButtonFormTemplate from './button.hbs?raw';
-import Handlebars from 'handlebars';
+import Block, { BlockProps } from '../../helpers/block.ts';
+import buttonTemplate from './button.hbs?raw';
 
-export interface ButtonFormProps extends BlockProps {
-    class: string;
-    type: string;
-    page?: string;
+interface ButtonProps extends BlockProps {
     text: string;
-    handlers?: Record<string, (event: Event) => void>;
+    className?: string;
+    page?: string;
+    img?: string;
 }
 
-class ButtonForm extends Block<ButtonFormProps> {
-    constructor(props: ButtonFormProps) {
-        super('button', props);
+export default class ButtonForm extends Block<ButtonProps> {
+    constructor(props: ButtonProps) {
+        super('div', {
+            ...props,
+        });
     }
 
-    render(): string {
-        const template = Handlebars.compile(ButtonFormTemplate);
-        return template(this.props);
+    render(): DocumentFragment {
+        return this.compile(buttonTemplate, this.props);
     }
 }
-
-export default ButtonForm;

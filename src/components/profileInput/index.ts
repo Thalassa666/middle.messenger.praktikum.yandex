@@ -1,6 +1,5 @@
 import Block, { BlockProps } from '../../helpers/block';
 import ProfileInputTemplate from './profileInput.hbs?raw';
-import Handlebars from 'handlebars';
 
 export interface ProfileInputProps extends BlockProps {
     label: string;
@@ -15,9 +14,8 @@ class ProfileInput extends Block<ProfileInputProps> {
         super('div', props);
     }
 
-    render(): string {
-        const template = Handlebars.compile(ProfileInputTemplate);
-        return template(this.props);
+    render(): DocumentFragment {
+        return this.compile(ProfileInputTemplate, this.props);
     }
 }
 

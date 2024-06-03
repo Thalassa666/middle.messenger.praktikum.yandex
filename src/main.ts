@@ -24,13 +24,16 @@ export type PageName = keyof typeof pages;
 
 function renderPage<T extends PageName>(pageName: T, context: PageContextType[T]) {
     const PageClass = pages[pageName];
- //@ts-expect-error (типизация контекста)
+    //@ts-expect-error (типизация контекста)
     const pageInstance = new PageClass(context);
 
     const appElement = document.getElementById('app');
     if (appElement) {
         appElement.innerHTML = '';
-        appElement.appendChild(pageInstance.getContent());
+        const content = pageInstance.getContent();
+        if (content) {
+            appElement.appendChild(content);
+        }
     }
 }
 
@@ -51,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => renderPage('main', pageConte
 document.addEventListener('click', function(event) {
     const target = event.target as HTMLElement;
     if (target && target.tagName === 'A' && target.getAttribute('page')) {
-        event.preventDefault();
         const pageName = target.getAttribute('page') as PageName;
         window.location.hash = `#${pageName}`;
     }
