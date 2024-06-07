@@ -1,9 +1,21 @@
-export { InputForm } from './input';
-export { ButtonForm } from './button';
-export { ProfileInput } from './profileInput';
-export { Avatar } from './avatar';
-export { ChatHeader } from './chatList/header';
-export { ChatItem } from './chatList/item';
-export { BodyHeader } from './chatBody/header';
-export { ChatBody } from './chatBody/body';
-export { ChatMessage } from './chatBody/message';
+import Avatar from './avatar';
+import BodyHeader from './chatBody/header';
+import ButtonForm from './button';
+import ChatHeader from './chatList/header';
+import ChatItem from './chatList/item';
+import ChatBody from './chatBody/body';
+import ChatMessage from './chatBody/message';
+import InputForm from './input';
+import ProfileInput from './profileInput';
+
+export {
+    Avatar,
+    BodyHeader,
+    ButtonForm,
+    ChatBody,
+    ChatItem,
+    ChatHeader,
+    ChatMessage,
+    InputForm,
+    ProfileInput,
+};

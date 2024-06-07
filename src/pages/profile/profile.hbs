@@ -1,15 +1,15 @@
 <section class="profile section">
-  <div class="profile__container container">
-    {{> Avatar title="John Doe" avatarUrl="/icon/avatar.svg" name="avatar"}}
-    {{> ProfileInput label="почта" profileInputValue="ya@ya.ru" isReadOnly=true name="email"}}
-    {{> ProfileInput label="логин" profileInputValue="login" isReadOnly=true name="login"}}
-    {{> ProfileInput label="имя" profileInputValue="John" isReadOnly=true name="first_name"}}
-    {{> ProfileInput label="фамилия" profileInputValue="Doe" isReadOnly=true name="second_name"}}
-    {{> ProfileInput label="телефон" profileInputValue="+5(666)1234567" isReadOnly=true name="phone"}}
-    <div class="profile__buttons">
-      {{> ButtonForm class="secondary-btn" text="Изменить данные" type="button" page="profileChange"}}
-      {{> ButtonForm class="secondary-btn" text="Сменить пароль" type="button" page="profileChangePass"}}
-      {{> ButtonForm class="secondary-btn" text="Выйти" type="button" page="login"}}
-    </div>
-  </div>
+    <form class="profile__container container">
+        {{{Avatar}}}
+        {{{EmailInput}}}
+        {{{LoginInput}}}
+        {{{FirstNameInput}}}
+        {{{SecondNameInput}}}
+        {{{PhoneInput}}}
+        <div class="profile__buttons">
+            {{{ChangeDataButton}}}
+            {{{ChangePassButton}}}
+            {{{LogoutButton}}}
+        </div>
+    </form>
 </section>

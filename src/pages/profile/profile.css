@@ -1,9 +1,10 @@
 .profile-input {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    padding: 10px;
+    padding: 10px 0;
     color: var(--text-primary);
-    width: 100%;
+    width: 416px;
 }
 
 .profile-input__input {
@@ -24,5 +25,12 @@
     gap: 5px;
     flex-direction: column;
     margin-top: 30px;
+}
+
+.input-error-message {
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-align: left;
+    padding: 5px 0;
 }
 

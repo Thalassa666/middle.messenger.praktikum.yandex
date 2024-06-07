@@ -1,16 +1,16 @@
 <section class="section profile">
-  <div class="profile__container container">
-      <form class="profile__form">
-        {{> Avatar title="John Doe" chageAvatar=true avatarUrl="/icon/avatar.svg" name="avatar"}}
-        {{> ProfileInput label="почта" profileInputValue="ya@ya.ru" profileInputType="email" name="email"}}
-        {{> ProfileInput label="логин" profileInputValue="login" profileInputType="text" name="login"}}
-        {{> ProfileInput label="имя" profileInputValue="John" profileInputType="text" name="first_name"}}
-        {{> ProfileInput label="фамилия" profileInputValue="Doe" profileInputType="text" name="second_name"}}
-        {{> ProfileInput label="имя в чате" profileInputValue="JohnDoe" profileInputType="text" name="display_name"}}
-        {{> ProfileInput label="телефон" profileInputValue="+5(666)1234567" profileInputType="phone" name="phone"}}
-        <div class="profile__buttons">
-          {{> ButtonForm class="primary-btn" text="Сохранить данные" type="button" page="profile"}}
-        </div>
-      </form>
-  </div>
+    <div class="profile__container container">
+        <form class="profile__form">
+            {{{Avatar}}}
+            {{{EmailInput}}}
+            {{{LoginInput}}}
+            {{{FirstNameInput}}}
+            {{{SecondNameInput}}}
+            {{{DisplayNameInput}}}
+            {{{PhoneInput}}}
+            <div class="profile__buttons">
+                {{{SaveButton}}}
+            </div>
+        </form>
+    </div>
 </section>
