@@ -4,6 +4,7 @@
     align-items: center;
     text-align: center;
     width: 100%;
+    overflow: hidden;
 }
 
 .body__date {
@@ -16,7 +17,8 @@
 .body__chat {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
+    overflow-y: auto;
 }
 
 .body__chat_message {
@@ -27,4 +29,15 @@
 
 .body__chat_message--right {
     justify-content: end;
+}
+
+.message__content {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+}
+
+.message__content.self {
+    align-items: flex-end;
 }

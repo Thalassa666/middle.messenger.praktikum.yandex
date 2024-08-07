@@ -1,92 +1,91 @@
 import './signin.css';
 import '../../style.css';
-import Block, { BlockProps } from '../../helpers/block';
-import signinPageTemplate from './signin.hbs?raw';
+import Block from '../../helpers/block';
 import InputForm from '../../components/input';
 import ButtonForm from '../../components/button';
-import { getFormData } from "../../helpers/getFormData.ts";
 import {
     emailValidation,
     firstNameValidation,
     loginValidation,
     passwordValidation, phoneValidation,
     secondNameValidation
-} from "../../helpers/validation.ts";
+} from '../../helpers/validation.ts';
+import Router from '../../helpers/Router.ts';
+import { connect, MapStateToProps } from '../../utils/connect.ts';
+import { me, create } from '../../services/Auth.service.ts';
+import { Routes } from '../../main.ts';
+import { getModel } from '../../utils/model.ts';
+import { CreateUser } from 'types/types.ts';
+import handleSubmit from '../../helpers/submit.ts';
 
-interface SigninPageProps extends BlockProps {
-    emailPlaceholder: string;
-    loginPlaceholder: string;
-    firstNamePlaceholder: string;
-    secondNamePlaceholder: string;
-    phonePlaceholder: string;
-    passwordPlaceholder: string;
-    confirmPasswordPlaceholder: string;
-}
+const router = Router;
 
-class SigninPage extends Block<SigninPageProps> {
-    constructor(props: SigninPageProps) {
-        super('div', {
+type RegType = Record<string, InputForm | ButtonForm>
+
+class SigninPage extends Block<RegType> {
+    constructor(props = {}) {
+        super({
             ...props,
             InputEmail: new InputForm({
                 type: 'email',
                 name: 'email',
-                placeholder: props.emailPlaceholder,
+                placeholder: 'почта',
                 events: {
-                    blur: emailValidation,
+                    blur: [emailValidation]
                 }
             }),
 
             InputLogin: new InputForm({
                 type: 'text',
                 name: 'login',
-                placeholder: props.loginPlaceholder,
+                placeholder: 'логин',
                 events: {
-                    blur: loginValidation,
+                    blur: [loginValidation]
                 }
             }),
 
             InputFirstName: new InputForm({
                 type: 'text',
                 name: 'first_name',
-                placeholder: props.firstNamePlaceholder,
+                placeholder: 'имя',
                 events: {
-                    blur: firstNameValidation,
+                    blur: [firstNameValidation]
                 }
             }),
 
             InputSecondName: new InputForm({
                 type: 'text',
                 name: 'second_name',
-                placeholder: props.secondNamePlaceholder,
+                placeholder: 'фамилия',
                 events: {
-                    blur: secondNameValidation,
+                    blur: [secondNameValidation]
                 }
             }),
 
             InputPhone: new InputForm({
                 type: 'phone',
                 name: 'phone',
-                placeholder: props.phonePlaceholder,
+                placeholder: 'телефон',
                 events: {
-                    blur: phoneValidation,
+                    blur: [phoneValidation]
                 }
             }),
 
             InputPassword: new InputForm({
                 type: 'password',
                 name: 'password',
-                placeholder: props.passwordPlaceholder,
+                placeholder: 'пароль',
                 events: {
-                    blur: passwordValidation,
+                    blur: [passwordValidation]
                 }
             }),
 
             InputConfirmPassword: new InputForm({
                 type: 'password',
                 name: 'confirm_password',
-                placeholder: props.confirmPasswordPlaceholder,
+                placeholder: 'пароль еще раз',
                 events: {
-                    blur: passwordValidation,
+                    blur: [passwordValidation]
                 }
             }),
 
@@ -96,10 +95,11 @@ class SigninPage extends Block<SigninPageProps> {
                 text: 'Зарегистрироваться',
                 page: 'main',
                 events: {
-                    click: (event: Event) => {
-                        event.preventDefault();
-                        this.handleFormSubmit(event);
-                    }
+                    click:  [e => {
+                        create(getModel(e) as CreateUser);
+                        handleSubmit(e);
+                        router.go(Routes.Chats);
+                    }]
                 }
             }),
 
@@ -109,38 +109,44 @@ class SigninPage extends Block<SigninPageProps> {
                 text: 'Войти',
                 page: 'login',
                 events: {
-                    click: () => {
-                        window.location.hash = '#login'
-                    }
+                    click: [() => {
+                        router.go('/')
+                    }]
                 }
             }),
         });
     }
 
-    handleFormSubmit(event: Event) {
-        const form = (event.target as HTMLElement).closest('form');
-        if (!form) return;
-
-        const inputs = form.querySelectorAll('input');
-        let isFormValid = true;
-
-        inputs.forEach(input => {
-            const blurEvent = new FocusEvent('blur', { relatedTarget: input });
-            input.dispatchEvent(blurEvent);
-
-            if (input.classList.contains('input-error')) {
-                isFormValid = false;
-            }
-        });
-
-        if (isFormValid) {
-            console.log(getFormData(event));
-            window.location.hash = '#main';
+    init(): void {
+        const getUserInfo = async () => {
+            if (this.props.currentUser === null) await me()
+            if (this.props.currentUser !== null) router.go(Routes.Chats)
         }
+        getUserInfo()
     }
-    render(): DocumentFragment {
-        return this.compile(signinPageTemplate, this.props);
+
+    render(): string {
+        return `
+        <section class="signin section">
+            <div class="signin__container container">
+                <h1 class="signin__title title">Регистрация</h1>
+                <form class="signin__form form">
+                    {{{InputEmail}}}
+                    {{{InputLogin}}}
+                    {{{InputFirstName}}}
+                    {{{InputSecondName}}}
+                    {{{InputPhone}}}
+                    {{{InputPassword}}}
+                    {{{InputConfirmPassword}}}
+                    {{{SignupButton}}}
+                    {{{LoginButton}}}
+                </form>
+            </div>
+        </section>
+        `
     }
 }
 
-export default SigninPage;
+const mapStateToProps: MapStateToProps = ({currentUser}) => ({currentUser});
+
+export default connect(mapStateToProps)(SigninPage);

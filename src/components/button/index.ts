@@ -1,21 +1,25 @@
-import Block, { BlockProps } from '../../helpers/block.ts';
-import buttonTemplate from './button.hbs?raw';
+import Block from '../../helpers/block.ts';
+import { EventsType } from '../../types/types.ts';
 
-interface ButtonProps extends BlockProps {
+interface ButtonProps {
     text: string;
+    type: string;
     className?: string;
     page?: string;
     img?: string;
+    events: EventsType
 }
 
 export default class ButtonForm extends Block<ButtonProps> {
     constructor(props: ButtonProps) {
-        super('div', {
+        super({
             ...props,
         });
     }
 
-    render(): DocumentFragment {
-        return this.compile(buttonTemplate, this.props);
+    render(): string {
+        return `
+        <button class="{{className}}" type="{{type}}" data-page="{{page}}">{{text}}</button>
+        `
     }
 }

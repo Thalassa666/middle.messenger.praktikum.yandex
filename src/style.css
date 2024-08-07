@@ -8,19 +8,24 @@
     --color-shadow: #888;
 }
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 .section {
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    min-height: 100vh;
+    height: 100dvh;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     width: 500px;
-    height: auto;
     padding: 40px;
     border: 2px solid var(--color-primary);
     border-radius: 10px;

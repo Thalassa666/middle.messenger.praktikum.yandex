@@ -1,17 +1,16 @@
 import './message.css';
-import Block, { BlockProps } from '../../../helpers/block';
-import chatMessageTemplate from './message.hbs?raw';
+import Block from '../../../helpers/block';
 import ButtonForm from "../../button";
 import InputForm from "../../../components/input";
 
-export interface ChatMessageProps extends BlockProps {
+export interface ChatMessageProps {
     attachIconSrc: string;
     sendIconSrc: string;
 }
 
 class ChatMessage extends Block<ChatMessageProps> {
     constructor(props: ChatMessageProps) {
-        super('div', {
+        super({
             ...props,
             Message: new InputForm({
                 name: 'message',
@@ -21,20 +20,29 @@ class ChatMessage extends Block<ChatMessageProps> {
             }),
             SendButton: new ButtonForm({
                 text: '',
+                type: 'submit',
                 img: '/icon/arrow.svg',
                 className: 'message__form_btn',
-                events: {
-                    click: (event: Event) => {
-                        event.preventDefault();
-
-                    }
-                }
+                events: {},
             })
         });
     }
 
-    render(): DocumentFragment {
-        return this.compile(chatMessageTemplate, this.props);
+    render(): string {
+        return `
+        <section class="message">
+            <div class="icon">
+                <label for="fileInput">
+                    <img class="message__icon" src="/icon/attach_file.svg" alt="прикрепить файл">
+                </label>
+                <input type="file" id="fileInput" name="file" class="profile__avatar_input">
+            </div>
+          <form class="message__form">
+              {{{ Message }}}
+              {{{ SendButton }}}
+          </form>
+        </section>
+        `
     }
 }
 

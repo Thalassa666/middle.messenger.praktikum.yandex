@@ -1,14 +1,24 @@
 import Block from '../../helpers/block.ts';
 import './main.css';
-import MainPageTemplate from './main.hbs?raw';
 
 class MainPage extends Block {
     constructor() {
-        super('div', {});
+        super({});
     }
 
-    render(): DocumentFragment {
-        return this.compile(MainPageTemplate, this.props);
+    render(): string {
+        return `
+        <nav class="nav_list">
+          <div class="nav_list__container">
+            <a page="login">Войти</a>
+            <a page="signin">Зарегистрироваться</a>
+            <a page="profile">Профиль</a>
+            <a page="chat">Чаты</a>
+            <a page="error404">Error 404</a>
+            <a page="error500">Error 500</a>
+          </div>
+        </nav>
+        `
     }
 }
 

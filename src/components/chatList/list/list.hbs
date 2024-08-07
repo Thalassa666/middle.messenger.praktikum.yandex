@@ -1,0 +1,11 @@
+<div class="chats">
+    {{#if showEmpty}}
+        <span>Нет чатов</span>
+    {{else}}
+        <div class="chatList">
+            <ul>
+                {{{ListItems}}}
+            </ul>
+        </div>
+    {{/if}}
+</div>

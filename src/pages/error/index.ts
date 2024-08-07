@@ -1,17 +1,16 @@
-import Block, { BlockProps } from '../../helpers/block.ts';
+import Block from '../../helpers/block.ts';
 import './error.css';
 import '../../style.css';
-import errorPageTemplate from './error.hbs?raw';
 import ButtonForm from '../../components/button';
 
-interface ErrorPageProps extends BlockProps {
-    error: string;
-    text: string;
-}
+type ErrorPageProps = {
+    code: string;
+    message: string;
+} & Record<string, unknown>;
 
 export default class ErrorPage extends Block<ErrorPageProps> {
     constructor(props: ErrorPageProps) {
-        super('div', {
+        super({
             ...props,
             ButtonForm: new ButtonForm({
                 className: 'secondary-btn',
@@ -19,13 +18,21 @@ export default class ErrorPage extends Block<ErrorPageProps> {
                 text: 'Назад',
                 page: 'main',
                 events: {
-                    click: () => window.location.hash = `#main`
+
                 }
             }),
         });
     }
 
-    render(): DocumentFragment {
-        return this.compile(errorPageTemplate, this.props);
+    render(): string {
+        return `
+        <section class="section error">
+          <div class="error__container container">
+            <h1 class="error__title">{{error}}</h1>
+            <p class="error__text">{{text}}</p>
+              {{{ ButtonForm }}}
+          </div>
+        </section>
+        `
     }
 }
