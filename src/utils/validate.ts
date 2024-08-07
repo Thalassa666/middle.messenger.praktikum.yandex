@@ -3,7 +3,7 @@ import type Block from '../helpers/block.ts';
 export function InputValidation (this: Block, event: Event, input: Block, errorText: string = 'Некорректное значение', ...conditions: RegExp[]): void {
     const el = event.target as HTMLInputElement
     const inputValue = el.value
-    let valid = validate(inputValue, ...conditions)
+    const valid = validate(inputValue, ...conditions)
     valid ? input.setProps({ error: false, errorText: '' }) : input.setProps({ error: true, errorText })
     this.setProps({ [input.props.name as string]: inputValue })
 }
