@@ -3,10 +3,10 @@ import './error.css';
 import '../../style.css';
 import ButtonForm from '../../components/button';
 
-interface ErrorPageProps {
-    error: string;
-    text: string;
-}
+type ErrorPageProps = {
+    code: string;
+    message: string;
+} & Record<string, unknown>;
 
 export default class ErrorPage extends Block<ErrorPageProps> {
     constructor(props: ErrorPageProps) {
