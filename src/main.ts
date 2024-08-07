@@ -1,67 +1,31 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
-import { pageContexts, PageContextType } from './pageContext.ts';
+import Router from './helpers/Router.ts';
 
-const pages = {
-    main: Pages.MainPage,
-    login: Pages.Login,
-    signin: Pages.Signin,
-    error404: Pages.ErrorPage,
-    error500: Pages.ErrorPage,
-    profile: Pages.Profile,
-    profileChange: Pages.ProfileChange,
-    profileChangePass: Pages.ProfileChangePass,
-    chat: Pages.Chat,
-};
+export const Routes = {
+    Login: '/',
+    Register: '/sign-up',
+    Profile: '/settings',
+    ProfileChange: '/settings/change',
+    ProfileChangePass: '/settings/changePass',
+    Chats: '/messenger',
+    Error: '*'
+}
+
+const router = Router
 
 Object.entries(Components).forEach(([name, Component]) => {
-    //@ts-expect-error (типизация контекста)
-    Handlebars.registerPartial(name, (props: unknown) => new Component(props).render());
+    Handlebars.registerPartial(name, Component.toString())
 });
 
-export type PageName = keyof typeof pages;
+router.use(Routes.Login, Pages.Login)
+    .use(Routes.Register, Pages.Signin)
+    .use(Routes.Profile, Pages.Profile)
+    .use(Routes.ProfileChange, Pages.ProfileChange)
+    .use(Routes.ProfileChangePass, Pages.ProfileChangePass)
+    .use(Routes.Chats, Pages.Chat)
+    .use(Routes.Error, Pages.ErrorPage)
+    .start();
 
-function renderPage<T extends PageName>(pageName: T, context: PageContextType[T]) {
-    const PageClass = pages[pageName];
-    //@ts-expect-error (типизация контекста)
-    const pageInstance = new PageClass(context);
 
-    const appElement = document.getElementById('app');
-    if (appElement) {
-        appElement.innerHTML = '';
-        const content = pageInstance.getContent();
-        if (content) {
-            appElement.appendChild(content);
-        }
-    }
-}
-
-function handleHashChange() {
-    const hash = window.location.hash.substring(1) as PageName;
-    if (pages[hash]) {
-        renderPage(hash, pageContexts[hash]);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-});
-
-document.addEventListener('DOMContentLoaded', () => renderPage('main', pageContexts.main));
-
-document.addEventListener('click', function(event) {
-    const target = event.target as HTMLElement;
-    if (target && target.tagName === 'A' && target.getAttribute('page')) {
-        const pageName = target.getAttribute('page') as PageName;
-        window.location.hash = `#${pageName}`;
-    }
-    /*if (target && target.tagName === 'BUTTON' && target.getAttribute('data-page')) {
-        event.preventDefault();
-        const pageName = target.getAttribute('data-page') as PageName;
-
-        const newContext = { ...currentContext, ...pageContexts[pageName] };
-        renderPage(pageName, newContext);
-    }*/
-});

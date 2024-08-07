@@ -1,0 +1,19 @@
+.userSearch {
+    list-style: none;
+}
+
+.userSearch li {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #efefef;
+    cursor: pointer;
+}
+
+.userSearch__container {
+    padding: 15px;
+    position: absolute;
+    left: 110%;
+    top: 0;
+    border-radius: 10px;
+    background: #fff;
+}

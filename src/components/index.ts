@@ -7,6 +7,7 @@ import ChatBody from './chatBody/body';
 import ChatMessage from './chatBody/message';
 import InputForm from './input';
 import ProfileInput from './profileInput';
+import ListItems from './chatList';
 
 export {
     Avatar,
@@ -18,4 +19,5 @@ export {
     ChatMessage,
     InputForm,
     ProfileInput,
+    ListItems,
 };

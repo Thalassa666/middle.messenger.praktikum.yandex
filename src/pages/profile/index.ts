@@ -1,62 +1,61 @@
-import Block, { BlockProps } from '../../helpers/block';
+import Block from '../../helpers/block';
 import './profile.css';
 import '../../style.css';
-import ProfileTemplate from './profile.hbs?raw';
 import Avatar from '../../components/avatar';
 import ProfileInput from '../../components/profileInput';
 import ButtonForm from '../../components/button';
+import Router from '../../helpers/Router.ts';
+import { me, logout } from '../../services/Auth.service.ts';
+import { UserResponse } from "types/types.ts";
+import { connect, MapStateToProps } from '../../utils/connect.ts';
 
-interface ProfilePageProps extends BlockProps {
-    title: string;
-    avatarUrl: string;
-    email: string;
-    login: string;
-    first_name: string;
-    second_name: string;
-    phone: string;
+const router = Router;
+
+interface ProfilePageProps {
+    currentUser: UserResponse | null;
 }
 
 class ProfilePage extends Block<ProfilePageProps> {
     constructor(props: ProfilePageProps) {
-        super('div', {
+        super({
             ...props,
             Avatar: new Avatar({
-                title: props.title,
-                avatarUrl: props.avatarUrl,
+                title: props.currentUser?.display_name || '',
+                avatar: props.currentUser?.avatar ? `https://ya-praktikum.tech/api/v2/resources${props.currentUser.avatar}` : '',
                 name: 'Avatar',
                 changeAvatar: false,
             }),
             EmailInput: new ProfileInput({
                 label: 'почта',
-                profileInputValue: props.email,
+                profileInputValue: props.currentUser?.email || '',
                 isReadOnly: true,
                 name: 'email',
                 profileInputType: 'email',
             }),
             LoginInput: new ProfileInput({
                 label: 'логин',
-                profileInputValue: props.login,
+                profileInputValue: props.currentUser?.login || '',
                 isReadOnly: true,
                 name: 'login',
                 profileInputType: 'text',
             }),
             FirstNameInput: new ProfileInput({
                 label: 'имя',
-                profileInputValue: props.first_name,
+                profileInputValue: props.currentUser?.first_name || '',
                 isReadOnly: true,
                 name: 'first_name',
                 profileInputType: 'text',
             }),
             SecondNameInput: new ProfileInput({
                 label: 'фамилия',
-                profileInputValue: props.second_name,
+                profileInputValue: props.currentUser?.second_name || '',
                 isReadOnly: true,
                 name: 'second_name',
                 profileInputType: 'text',
             }),
             PhoneInput: new ProfileInput({
                 label: 'телефон',
-                profileInputValue: props.phone,
+                profileInputValue: props.currentUser?.phone || '',
                 isReadOnly: true,
                 name: 'phone',
                 profileInputType: 'phone',
@@ -65,52 +64,100 @@ class ProfilePage extends Block<ProfilePageProps> {
                 className: 'secondary-btn',
                 text: 'Изменить данные',
                 type: 'button',
-                page: 'profileChange',
+                page: '/settings/change',
                 events: {
-                    click: (event: Event) => {
+                    click: [(event: Event) => {
                         event.preventDefault();
                         this.handleButtonClick(event);
-                    }
+                    }]
                 }
             }),
             ChangePassButton: new ButtonForm({
                 className: 'secondary-btn',
                 text: 'Сменить пароль',
                 type: 'button',
-                page: 'profileChangePass',
+                page: '/settings/changePass',
                 events: {
-                    click: (event: Event) => {
+                    click: [(event: Event) => {
                         event.preventDefault();
                         this.handleButtonClick(event);
-                    }
+                    }]
                 }
             }),
             LogoutButton: new ButtonForm({
                 className: 'secondary-btn',
                 text: 'Выйти',
                 type: 'button',
-                page: 'login',
+                page: '/',
                 events: {
-                    click: (event: Event) => {
-                        event.preventDefault();
-                        this.handleButtonClick(event);
-                    }
+                    click: [logout]
                 }
             })
         });
     }
 
+    init(): void {
+        const getUserInfo = async () => {
+            if (this.props.currentUser === null) await me()
+        }
+        getUserInfo()
+    }
+
+    componentDidUpdate(oldProps: ProfilePageProps, newProps: ProfilePageProps): boolean {
+        this.children.EmailInput.setProps({ profileInputValue: this.props.currentUser?.email });
+        this.children.LoginInput.setProps({ profileInputValue: this.props.currentUser?.login });
+        this.children.FirstNameInput.setProps({ profileInputValue: this.props.currentUser?.first_name });
+        this.children.SecondNameInput.setProps({ profileInputValue: this.props.currentUser?.second_name });
+        this.children.PhoneInput.setProps({ profileInputValue: this.props.currentUser?.phone });
+        this.children.Avatar.setProps({
+            title: this.props.currentUser?.display_name || '',
+            avatar: this.props.currentUser?.avatar ? `https://ya-praktikum.tech/api/v2/resources/${this.props.currentUser.avatar}` : '',
+        });
+        return true;
+        if (oldProps.currentUser !== newProps.currentUser) {
+            this.children.EmailInput.setProps({ profileInputValue: newProps.currentUser?.email });
+            this.children.LoginInput.setProps({ profileInputValue: newProps.currentUser?.login });
+            this.children.FirstNameInput.setProps({ profileInputValue: newProps.currentUser?.first_name });
+            this.children.SecondNameInput.setProps({ profileInputValue: newProps.currentUser?.second_name });
+            this.children.PhoneInput.setProps({ profileInputValue: newProps.currentUser?.phone });
+            this.children.Avatar.setProps({
+                title: newProps.currentUser?.display_name || '',
+                avatar: newProps.currentUser?.avatar ? `https://ya-praktikum.tech/api/v2/resources/${newProps.currentUser?.avatar}` : ''
+            });
+            return true;
+        }
+    }
+
+
     handleButtonClick(event: Event) {
         const target = event.target as HTMLButtonElement;
         const page = target.getAttribute('data-page');
         if (page) {
-            window.location.hash = `#${page}`;
+            router.go(`${page}`);
         }
     }
 
-    render(): DocumentFragment {
-        return this.compile(ProfileTemplate, this.props);
+    render(): string {
+        return `
+        <section class="profile section">
+            <form class="profile__container container">
+                {{{Avatar}}}
+                {{{EmailInput}}}
+                {{{LoginInput}}}
+                {{{FirstNameInput}}}
+                {{{SecondNameInput}}}
+                {{{PhoneInput}}}
+                <div class="profile__buttons">
+                    {{{ChangeDataButton}}}
+                    {{{ChangePassButton}}}
+                    {{{LogoutButton}}}
+                </div>
+            </form>
+        </section>
+        `
     }
 }
 
-export default ProfilePage;
+const mapStateToProps: MapStateToProps = ({currentUser}) => ({currentUser});
+
+export default connect(mapStateToProps)(ProfilePage);

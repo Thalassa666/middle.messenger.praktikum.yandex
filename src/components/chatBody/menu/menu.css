@@ -1,0 +1,12 @@
+.chatControl {
+    position: relative;
+}
+
+.chatControl__chatsControlButtons {
+    position: absolute;
+    right: 10px;
+    top: 9%;
+    background: var(--color-active-item);
+    border-radius: 10px;
+    z-index: 1000;
+}

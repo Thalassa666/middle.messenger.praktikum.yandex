@@ -17,11 +17,7 @@ export default function handleSubmit(event: Event) {
         }
     });
 
-    const target = event.target as HTMLButtonElement;
-    const page = target.getAttribute('data-page');
-
-    if (isFormValid && page) {
+    if (isFormValid) {
         console.log(getFormData(event));
-        window.location.hash = `#${page}`;
     }
 }

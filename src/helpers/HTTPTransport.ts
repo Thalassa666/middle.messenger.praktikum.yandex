@@ -1,76 +1,94 @@
-enum METHODS {
+enum METHOD {
     GET = 'GET',
     POST = 'POST',
     PUT = 'PUT',
     PATCH = 'PATCH',
-    DELETE = 'DELETE',
+    DELETE = 'DELETE'
+};
+
+function queryStringify(data: any): string {
+    const arr = [];
+    for (let key in data) {
+        arr.push(key.toString() + '=' + data[key].toString());
+    }
+    return arr.length > 0 ? '?' + arr.join('&') : '';
 }
 
-function queryStringify(data: { [key: string]: string }): string {
-    return (
-        '?' +
-        Object.keys(data)
-            .map((key) => {
-                return `${key}=${data[key]}`;
-            })
-            .join('&')
-    );
+type OptionsGeneral = {
+    method: string
+    data?: Document | XMLHttpRequestBodyInit | null | undefined
+    headers?: Record<string, string>
+    timeout?: number
+    withCredentials?: boolean
 }
 
-interface Options {
-    timeout?: number;
-    data?: { [key: string]: string };
-    method?: METHODS;
+type OptionsType = Omit<OptionsGeneral, 'method'>
+type ConstructorOptionsType = {
+    baseUrl?: string;
+    url?: string;
 }
 
-type HTTPMethod = (url: string, options?: Options) => Promise<unknown>
 
-class HTTPTransport {
+type HTTPMethod = (url: string, options: OptionsType) => Promise<XMLHttpRequest>
 
-    get: HTTPMethod = (url, options = {}) => (
-        this.request(url, {...options, method: METHODS.GET}, options.timeout)
-    )
+export default class HTTPTransport {
+    private _baseUrl: string
 
-    put: HTTPMethod = (url, options = {}) => (
-        this.request(url, {...options, method: METHODS.PUT}, options.timeout)
-    )
+    constructor({ baseUrl = 'https://ya-praktikum.tech/api/v2', url = '' }: ConstructorOptionsType) {
+        this._baseUrl = baseUrl.concat(url)
+    }
 
-    post: HTTPMethod = (url, options = {}) => (
-        this.request(url, {...options, method: METHODS.POST}, options.timeout)
-    )
+    get: HTTPMethod = (url, options) => {
+        const params = queryStringify(options.data)
+        return this.request(this._baseUrl + url + params, { ...options, method: METHOD.GET });
+    };
 
-    delete: HTTPMethod = (url, options = {}) => (
-        this.request(url, {...options, method: METHODS.DELETE}, options.timeout)
-    )
+    put: HTTPMethod = (url, options) => {
+        return this.request(this._baseUrl + url, { ...options, method: METHOD.PUT });
+    }
 
-    request = (url: string, options: Options, timeout = 5000) => {
-        const { data, method } = options;
+    post: HTTPMethod = (url, options) => {
+        return this.request(this._baseUrl + url, { ...options, method: METHOD.POST });
+    }
 
-        return new Promise((resolve, reject) => {
-            if (!method) {
-                reject('Нет метода');
-                return;
-            }
+    delete: HTTPMethod = (url, options) => {
+        return this.request(this._baseUrl + url, { ...options, method: METHOD.DELETE });
+    }
+
+    patch: HTTPMethod = (url, options) => {
+        return this.request(this._baseUrl + url, { ...options, method: METHOD.PATCH });
+    }
+
+    request = (url: string, options: OptionsGeneral): Promise<XMLHttpRequest> => {
+        const { method, data, headers = {}, timeout = 5000, withCredentials = false } = options;
+
+        return new Promise<XMLHttpRequest>((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-
             xhr.open(method, url);
-            xhr.timeout = timeout;
+            xhr.withCredentials = withCredentials
+
+            for (let header in headers as Record<string, string>) {
+                xhr.setRequestHeader(header.toString(), headers[header].toString());
+            }
 
             xhr.onload = function () {
                 resolve(xhr);
             };
 
             xhr.onabort = reject;
+
             xhr.onerror = reject;
+
+            xhr.timeout = timeout;
+
             xhr.ontimeout = reject;
 
-            if (method === 'GET' || !data) {
+            if (method === METHOD.GET || data === undefined) {
                 xhr.send();
             } else {
-                xhr.send(queryStringify(data));
+                xhr.send(data);
+                console.log(data)
             }
         });
     };
 }
-
-export default HTTPTransport;

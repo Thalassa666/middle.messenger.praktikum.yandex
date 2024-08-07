@@ -27,11 +27,11 @@
 }
 
 .header__profile-link {
-    margin-top: 10px;
+    border: none;
+    background-color: transparent;
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
     width: 100%;
-    text-align: end;
     color: var(--color-primary);
 }

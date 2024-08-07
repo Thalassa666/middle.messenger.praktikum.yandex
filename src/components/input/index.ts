@@ -1,20 +1,34 @@
-import Block, { BlockProps } from '../../helpers/block';
-import inputFormTemplate from './input.hbs?raw';
+import Block from '../../helpers/block';
+import { EventsType } from "../../types/types.ts";
 
-export interface InputFormProps extends BlockProps {
+export interface InputFormProps {
     type: string;
     name: string;
+    value?: string;
     placeholder: string;
     className?: string;
+    events?: EventsType
 }
 
 class InputForm extends Block<InputFormProps> {
     constructor(props: InputFormProps) {
-        super('div', props);
+        super(props);
     }
 
-    render(): DocumentFragment {
-        return this.compile(inputFormTemplate, this.props);
+
+
+    render(): string {
+        return `
+        <div class="input_container">
+           <input
+           class="input {{className}}"
+           name="{{name}}"
+           type="{{type}}"
+           placeholder="{{placeholder}}"
+           value="{{value}}"
+           >
+        </div>
+        `
     }
 }
 
