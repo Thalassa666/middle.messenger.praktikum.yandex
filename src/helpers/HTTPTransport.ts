@@ -4,8 +4,9 @@ enum METHOD {
     PUT = 'PUT',
     PATCH = 'PATCH',
     DELETE = 'DELETE'
-};
+}
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function queryStringify(data: any): string {
     const arr = [];
     for (const key in data) {

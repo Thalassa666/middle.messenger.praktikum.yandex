@@ -4,6 +4,7 @@ import { Routes } from "../main";
 const defaultStore = Store;
 const router = Router;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const HttpResponseHandler = (status: number, response: any, stateError: any, store = defaultStore, stateData?: any): void => {
     switch (status) {
         case 200:

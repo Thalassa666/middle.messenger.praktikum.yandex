@@ -80,6 +80,7 @@ class LoginPage extends Block {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     componentDidUpdate(oldProps: { [x: string]: any }, newProps: { [x: string]: any }): boolean {
         if (oldProps.currentUser !== newProps.currentUser && newProps.currentUser !== null) {
             router.go(Routes.Chats);

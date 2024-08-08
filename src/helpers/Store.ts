@@ -23,6 +23,7 @@ export interface IState {
 }
 
 export interface INextState {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [x: string]: any;
     chats?: ChatsResponse[];
     currentUser?: UserResponse | null;
@@ -56,7 +57,7 @@ const defaultState: IState = {
 }
 
 class Store extends EventBus {
-    // @ts-expect-error
+    // @ts-expect-error @typescript-eslint/ban-ts-comment
     private state: IState = defaultState;
 
     private static __instance: Store

@@ -1,6 +1,7 @@
 import Block from "./block";
 import Route from "./Route";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructable<T = any> = new (...args: any[]) => T;
 
 class Router {

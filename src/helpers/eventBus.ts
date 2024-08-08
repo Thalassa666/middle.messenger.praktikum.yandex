@@ -5,6 +5,7 @@ type ListenersType = Record<string, CBT[]>
 export default class EventBus {
     listeners: ListenersType = {}
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     on (event: string, callback: (data?: any) => void): void {
         if (!Array.isArray(this.listeners[event])) {
             this.listeners[event] = []

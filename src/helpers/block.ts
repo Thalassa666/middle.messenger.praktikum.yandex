@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid'
 import Handlebars from 'handlebars'
 import { EventsType } from '../types/types.ts'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PropsType = Record<string, any>
 type ChildrenType = Record<string, Block>
 
