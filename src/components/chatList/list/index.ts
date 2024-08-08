@@ -10,7 +10,7 @@ class ListItems extends Block {
             ...props,
         });
     }
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     componentDidUpdate(oldProps: { [x: string]: any }, newProps: { [x: string]: any }): boolean {
         if (oldProps.chats !== newProps.chats) {
             this.setProps({
