@@ -46,24 +46,22 @@ export default class Block<P extends PropsType = PropsType, C extends ChildrenTy
     }
 
     private _makePropsProxy(props: PropsType): PropsType {
-        const self = this
-
         return new Proxy(props, {
-            get(target, prop) {
-                const value = target[prop as string]
-                return typeof value === 'function' ? value.bind(target) : value
+            get: (target, prop) => {
+                const value = target[prop as string];
+                return typeof value === 'function' ? value.bind(target) : value;
             },
-            set(target, prop, value) {
-                const oldTarget = { ...target }
-                target[prop as string] = value
+            set: (target, prop, value) => {
+                const oldTarget = { ...target };
+                target[prop as string] = value;
 
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target)
-                return true
+                this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                return true;
             },
-            deleteProperty() {
-                throw new Error('Нет доступа')
+            deleteProperty: () => {
+                throw new Error('Нет доступа');
             }
-        })
+        });
     }
 
     private _registerEvents(eventBus: EventBus): void {

@@ -8,7 +8,7 @@ enum METHOD {
 
 function queryStringify(data: any): string {
     const arr = [];
-    for (let key in data) {
+    for (const key in data) {
         arr.push(key.toString() + '=' + data[key].toString());
     }
     return arr.length > 0 ? '?' + arr.join('&') : '';
@@ -67,7 +67,7 @@ export default class HTTPTransport {
             xhr.open(method, url);
             xhr.withCredentials = withCredentials
 
-            for (let header in headers as Record<string, string>) {
+            for (const header in headers as Record<string, string>) {
                 xhr.setRequestHeader(header.toString(), headers[header].toString());
             }
 

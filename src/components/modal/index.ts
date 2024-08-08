@@ -39,7 +39,7 @@ class Modal extends Block<ModalType> {
                 type: 'text',
                 placeholder: '',
                 events: {
-                    change: [changeEvent] || []
+                    change: changeEvent ? [changeEvent] : []
                 }
             }),
             usersSearchList: new UsersSearchList({

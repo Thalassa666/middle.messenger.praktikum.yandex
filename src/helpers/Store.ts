@@ -56,7 +56,7 @@ const defaultState: IState = {
 }
 
 class Store extends EventBus {
-    // @ts-ignore
+    // @ts-expect-error
     private state: IState = defaultState;
 
     private static __instance: Store
