@@ -263,23 +263,26 @@ export const updateChatAvatar = async (formData: ChangeChatAvatarSubmitData) => 
         const responseParse = JSON.parse(response);
 
         switch (status) {
-            case 200:
+            case 200: {
                 const currentActiveChat = store.getState().activeChat;
                 if (currentActiveChat) {
                     const updatedChat: ChatsResponse = {
                         ...currentActiveChat,
                         avatar: responseParse.avatar,
                     };
-                    store.set({
-                        activeChat: updatedChat,
-                    });
+
                     const chats = store.getState().chats?.map((chat: ChatsResponse) =>
                         chat.id === updatedChat.id ? updatedChat : chat
                     );
-                    store.set({ chats });
-                    store.set({ changeChatAvatarError: null });
+
+                    store.set({
+                        activeChat: updatedChat,
+                        chats,
+                        changeChatAvatarError: null,
+                    });
                 }
                 break;
+            }
             case 400:
                 store.set({ changeChatAvatarError: responseParse });
                 break;
