@@ -18,7 +18,7 @@ class ChatAvatar extends Block<ChatAvatarProps> {
         return `
         <div class="avatar">
           <div class="chat__avatar">
-            <img src="{{avatar}}" alt="Аватар профиля" class="chat-avatar">
+            <img src="{{avatar}}" alt="Аватар чата" class="chat-avatar">
             {{#if changeAvatar}}
                   <label for="chatInput">
                       <div class="chat__avatar_upload" name="{{name}}">
