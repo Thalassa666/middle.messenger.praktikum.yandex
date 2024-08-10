@@ -1,11 +1,14 @@
+import { BASE_URL } from "../constants/constants.ts";
+
 enum METHOD {
     GET = 'GET',
     POST = 'POST',
     PUT = 'PUT',
     PATCH = 'PATCH',
     DELETE = 'DELETE'
-};
+}
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function queryStringify(data: any): string {
     const arr = [];
     for (const key in data) {
@@ -34,7 +37,7 @@ type HTTPMethod = (url: string, options: OptionsType) => Promise<XMLHttpRequest>
 export default class HTTPTransport {
     private _baseUrl: string
 
-    constructor({ baseUrl = 'https://ya-praktikum.tech/api/v2', url = '' }: ConstructorOptionsType) {
+    constructor({ baseUrl = BASE_URL, url = '' }: ConstructorOptionsType) {
         this._baseUrl = baseUrl.concat(url)
     }
 

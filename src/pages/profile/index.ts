@@ -8,6 +8,7 @@ import Router from '../../helpers/Router.ts';
 import { me, logout } from '../../services/Auth.service.ts';
 import { UserResponse } from "types/types.ts";
 import { connect, MapStateToProps } from '../../utils/connect.ts';
+import { BASE_URL } from '../../constants/constants.ts';
 
 const router = Router;
 
@@ -21,7 +22,7 @@ class ProfilePage extends Block<ProfilePageProps> {
             ...props,
             Avatar: new Avatar({
                 title: props.currentUser?.display_name || '',
-                avatar: props.currentUser?.avatar ? `https://ya-praktikum.tech/api/v2/resources${props.currentUser.avatar}` : '',
+                avatar: props.currentUser?.avatar ? `${BASE_URL}/resources${props.currentUser.avatar}` : '',
                 name: 'Avatar',
                 changeAvatar: false,
             }),
@@ -111,7 +112,7 @@ class ProfilePage extends Block<ProfilePageProps> {
         this.children.PhoneInput.setProps({ profileInputValue: this.props.currentUser?.phone });
         this.children.Avatar.setProps({
             title: this.props.currentUser?.display_name || '',
-            avatar: this.props.currentUser?.avatar ? `https://ya-praktikum.tech/api/v2/resources/${this.props.currentUser.avatar}` : '',
+            avatar: this.props.currentUser?.avatar ? `${BASE_URL}/resources/${this.props.currentUser.avatar}` : '',
         });
         return true;
         if (oldProps.currentUser !== newProps.currentUser) {
@@ -122,7 +123,7 @@ class ProfilePage extends Block<ProfilePageProps> {
             this.children.PhoneInput.setProps({ profileInputValue: newProps.currentUser?.phone });
             this.children.Avatar.setProps({
                 title: newProps.currentUser?.display_name || '',
-                avatar: newProps.currentUser?.avatar ? `https://ya-praktikum.tech/api/v2/resources/${newProps.currentUser?.avatar}` : ''
+                avatar: newProps.currentUser?.avatar ? `${BASE_URL}/resources/${newProps.currentUser?.avatar}` : ''
             });
             return true;
         }

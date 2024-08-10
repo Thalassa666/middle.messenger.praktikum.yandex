@@ -4,6 +4,7 @@ import { ChatsResponse } from '../../../types/types.ts';
 import { MapStateToProps, connect } from '../../../utils/connect.ts';
 import { MessageService } from '../../../services/Message.service.ts';
 import { getActiveChatUsers, setActiveChat } from '../../../services/Chats.service.ts';
+import { BASE_URL } from '../../../constants/constants.ts';
 
 export type ItemProps = {
     activeChat: ChatsResponse;
@@ -25,13 +26,18 @@ class Item extends Block {
 
     init() {
         this.setProps({socket: new MessageService()})
-        this.setProps({avatar: 'icon/icon.svg'})
         this.props.socket.connectChat(this.props.currentUser.id, this.props.id)
+        this.setProps({
+            avatar: this.props.avatar
+                ? `${BASE_URL}/resources${this.props.avatar}`
+                : 'icon/icon.svg',
+        });
     }
 
     componentDidUpdate(oldProps: ItemProps, newProps: ItemProps): boolean {
         if (oldProps.activeChat !== newProps.activeChat) {
-            if (newProps.activeChat.id === this.props.id) {
+            if (newProps.activeChat && newProps.activeChat.id === this.props.id) {
+                console.log(newProps.activeChat.id);
                 this.setProps({ active: 'active' })
                 this.props.socket?.getOld()
             } else {
@@ -39,6 +45,9 @@ class Item extends Block {
                 this.props.socket?.clearMessageList()
             }
             return true
+        }
+        if (oldProps.activeChat?.avatar !== newProps.activeChat?.avatar) {
+            this.children.img.setProps({ avatar: newProps.activeChat?.avatar ? `${BASE_URL}/resources${newProps.activeChat?.avatar}` : 'icon/icon.svg' });
         }
         return false
     }

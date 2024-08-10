@@ -15,6 +15,17 @@ class ProfileInput extends Block<ProfileInputProps> {
         super(props);
     }
 
+    _addEvents() {
+        super._addEvents();
+
+        const inputElement = this.getContent()?.querySelector('input');
+        if (inputElement && this.props.events?.blur) {
+            this.props.events.blur.forEach(func => {
+                inputElement.addEventListener('blur', func);
+            });
+        }
+    }
+
     render(): string {
         return `
         <div class="profile-input">
@@ -30,7 +41,7 @@ class ProfileInput extends Block<ProfileInputProps> {
           {{#if isReadOnly}}readonly{{/if}}
           >
         </div>
-        `
+        `;
     }
 }
 

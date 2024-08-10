@@ -4,6 +4,7 @@ import Store from "../helpers/Store";
 import  Block  from "../helpers/block.ts";
 import { Constructable } from "../types/types";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function connect(mapStateToProps: (state: IState) => IState, dispatch?: Record<string, any>) {
     return function (Component: Constructable<Block>) {
         return class extends Component {
@@ -14,9 +15,11 @@ export function connect(mapStateToProps: (state: IState) => IState, dispatch?: R
 
                 super({ ...props, ...state });
 
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const dispatchHandler: Record<string, any> = {};
 
                 Object.entries(dispatch || {}).forEach(([key, handler]) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     dispatchHandler[key] = (...args: any[]) => handler(Store.set.bind(Store), ...args)
                 })
 

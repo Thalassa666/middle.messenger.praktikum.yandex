@@ -2,6 +2,7 @@ import { WSTransport } from "../helpers/WSTransport.ts"
 
 export type EventsType = Record<string, EventListenerOrEventListenerObject[]>
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Constructable<T = any> = new (...args: any[]) => T;
 
 export type UserResponse = {
@@ -44,6 +45,11 @@ export type ChatUserResponse = {
     avatar: string;
     role: string;
 }
+
+export type ChangeChatAvatarSubmitData = {
+    chatId: number;
+    file: File;
+};
 
 export type UsersRequest = {
     users: number[];
@@ -100,5 +106,6 @@ export type Message = {
     time: string;
     content: string;
     is_read: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     file?: any;
 }
