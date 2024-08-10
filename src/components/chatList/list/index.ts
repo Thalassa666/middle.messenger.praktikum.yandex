@@ -4,22 +4,26 @@ import { MapStateToProps, connect } from '../../../utils/connect.ts';
 import Item from '../item/index.ts';
 import './list.css';
 
+interface ListItemsProps {
+    chats?: ChatsResponse[];
+}
+
 class ListItems extends Block {
-    constructor(props: Record<string, unknown>) {
+    constructor(props: ListItemsProps) {
         super({
             ...props,
         });
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    componentDidUpdate(oldProps: { [x: string]: any }, newProps: { [x: string]: any }): boolean {
+
+    componentDidUpdate(oldProps: ListItemsProps, newProps: ListItemsProps): boolean {
         if (oldProps.chats !== newProps.chats) {
             this.setProps({
                 ListItems: newProps.chats?.map((chat: ChatsResponse) => new Item({ ...chat })) || [],
-                showEmpty: !Array.isArray(newProps.chats) || newProps.chats.length
+                showEmpty: !Array.isArray(newProps.chats) || newProps.chats.length === 0
             });
-            return true
+            return true;
         }
-        return false
+        return false;
     }
 
     render(): string {

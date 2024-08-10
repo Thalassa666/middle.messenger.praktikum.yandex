@@ -10,7 +10,6 @@ class Menu extends Block<Record<string, string | boolean>> {
             ...props
         })
         this.setProps({showPanel: false})
-        console.log(this.props)
     }
 
     init() {

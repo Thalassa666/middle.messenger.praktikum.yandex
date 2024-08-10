@@ -2,7 +2,13 @@ import ChatsApi from '../api/Chats.api';
 import Router from '../helpers/Router.ts';
 import Store from '../helpers/Store.ts';
 import { Routes } from '../main.ts';
-import { UsersRequest, ChatsResponse, CreateChat, CreateChatResponse } from '../types/types.ts';
+import {
+    UsersRequest,
+    ChatsResponse,
+    CreateChat,
+    CreateChatResponse,
+    ChangeChatAvatarSubmitData
+} from '../types/types.ts';
 
 const router = Router;
 const store = Store;
@@ -249,3 +255,48 @@ export const getToken = async (chatId: number) => {
         console.error(e);
     }
 }
+
+export const updateChatAvatar = async (formData: ChangeChatAvatarSubmitData) => {
+    try {
+        const data = await chatsApi.changeAvatar(formData);
+        const { response, status } = data;
+        const responseParse = JSON.parse(response);
+
+        switch (status) {
+            case 200:
+                const currentActiveChat = store.getState().activeChat;
+                if (currentActiveChat) {
+                    const updatedChat: ChatsResponse = {
+                        ...currentActiveChat,
+                        avatar: responseParse.avatar,
+                    };
+                    store.set({
+                        activeChat: updatedChat,
+                    });
+                    const chats = store.getState().chats?.map((chat: ChatsResponse) =>
+                        chat.id === updatedChat.id ? updatedChat : chat
+                    );
+                    store.set({ chats });
+                    store.set({ changeChatAvatarError: null });
+                }
+                break;
+            case 400:
+                store.set({ changeChatAvatarError: responseParse });
+                break;
+            case 401:
+                store.set({ changeChatAvatarError: responseParse });
+                router.go(Routes.Login);
+                break;
+            case 500:
+                store.set({ changeChatAvatarError: responseParse });
+                router.go(Routes.Error);
+                break;
+            default:
+                store.set({ changeChatAvatarError: { reason: "Неизвестная ошибка" } });
+                break;
+        }
+    } catch (error) {
+        console.error(error);
+        store.set({ changeChatAvatarError: { reason: "Неизвестная ошибка" } });
+    }
+};

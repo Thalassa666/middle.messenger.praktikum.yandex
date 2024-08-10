@@ -18,7 +18,7 @@ export default class Block<P extends PropsType = PropsType, C extends ChildrenTy
     children: C
     props: P
     eventBus: () => EventBus
-    private _element: HTMLElement | null = null
+    protected _element: HTMLElement | null = null
     _id: string = nanoid(6)
 
     /** JSDoc
@@ -133,7 +133,7 @@ export default class Block<P extends PropsType = PropsType, C extends ChildrenTy
         return document.createElement(tagName)
     }
 
-    private _addEvents(): void {
+    protected _addEvents(): void {
         const { events } = this.props as Record<string, EventsType>
         if (events !== null && events !== undefined) {
             Object.keys(events).forEach(eventName => {
@@ -168,7 +168,6 @@ export default class Block<P extends PropsType = PropsType, C extends ChildrenTy
     }
 
     _componentDidUpdate(oldProps: PropsType = {}, newProps: PropsType = {}): void {
-        // console.log('CDU')
         this._removeEvents()
         const response = this.componentDidUpdate(oldProps, newProps)
         if (!response) {

@@ -1,102 +1,57 @@
-export function firstNameValidation(event: Event) {
+function validateInput(event: Event, pattern: RegExp, errorMessage: string) {
     const target = event.target as HTMLInputElement;
-    const firstNameValue = target.value.trim();
-    const namePattern = /^[А-ЯЁA-Z][а-яёa-z]*$/;
+    const value = target.value.trim();
 
-    if (!namePattern.test(firstNameValue)) {
-        showError(target, 'Имя должно начинаться с заглавной буквы, содержать только латинские или кириллические символы, дефис и не содержать цифры.');
+    if (!pattern.test(value)) {
+        showError(target, errorMessage);
     } else {
         clearError(target);
     }
+}
+
+export function firstNameValidation(event: Event) {
+    validateInput(event, /^[А-ЯЁA-Z][а-яёa-z]*$/, 'Имя должно начинаться с заглавной буквы и содержать только буквы.');
 }
 
 export function secondNameValidation(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const firstNameValue = target.value.trim();
-    const namePattern = /^[А-ЯЁA-Z][а-яёa-z]*$/;
-
-    if (!namePattern.test(firstNameValue)) {
-        showError(target, 'Фамилия должна начинаться с заглавной буквы, содержать только латинские или кириллические символы, дефис и не содержать цифры.');
-    } else {
-        clearError(target);
-    }
+    validateInput(event, /^[А-ЯЁA-Z][а-яёa-z]*$/, 'Фамилия должна начинаться с заглавной буквы и содержать только буквы.');
 }
 
 export function loginValidation(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const loginValue = target.value.trim();
-    const loginPattern = /^[a-zA-Z0-9_-]{3,20}$/;
-
-    if (!loginPattern.test(loginValue)) {
-        showError(target, 'Логин должен содержать от 3 до 20 символов латиницы, цифры, дефис и/или нижнее подчёркивание.');
-    } else {
-        clearError(target);
-    }
+    validateInput(event, /^[a-zA-Z0-9_-]{3,20}$/, 'Логин должен содержать от 3 до 20 символов, только латинские буквы, цифры, дефис и/или подчеркивание.');
 }
 
 export function emailValidation(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const emailValue = target.value.trim();
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
-
-    if (!emailPattern.test(emailValue)) {
-        showError(target, 'Email должен содержать латинские буквы, цифры, дефис, подчёркивание, символ "@" и точку после неё, перед которой должны быть буквы.');
-    } else {
-        clearError(target);
-    }
+    validateInput(event, /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/, 'Email должен быть в формате "example@domain.com".');
 }
 
 export function passwordValidation(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const passwordValue = target.value.trim();
-    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/;
-
-    if (!passwordPattern.test(passwordValue)) {
-        showError(target, 'Пожалуйста, введите пароль от 8 до 40 символов, содержащий хотя бы одну заглавную букву и цифру.');
-    } else {
-        clearError(target);
-    }
+    validateInput(event, /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/, 'Пароль должен содержать от 8 до 40 символов, хотя бы одну заглавную букву и цифру.');
 }
 
 export function phoneValidation(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const phoneValue = target.value.trim();
-    const phonePattern = /^\+?\d{10,15}$/;
-
-    if (!phonePattern.test(phoneValue)) {
-        showError(target, 'Пожалуйста, введите номер телефона от 10 до 15 цифр, возможно начиная с плюса.');
-    } else {
-        clearError(target);
-    }
-}
-
-export function messageValidation(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const messageValue = target.value.trim();
-
-    if (messageValue === '') {
-        showError(target, 'Пожалуйста, введите сообщение.');
-    } else {
-        clearError(target);
-    }
+    validateInput(event, /^\+?\d{10,15}$/, 'Телефон должен содержать от 10 до 15 цифр, возможно начиная с плюса.');
 }
 
 function showError(input: HTMLInputElement, message: string) {
-    const errorElement = document.createElement('div');
-    errorElement.className = 'input-error-message';
-    errorElement.innerText = message;
+    let errorElement = input.parentNode?.querySelector('.input-error-message') as HTMLElement;
 
-    input.classList.add('input-error');
-    if (input.nextSibling) {
-        input.parentNode?.removeChild(input.nextSibling);
+    if (!errorElement) {
+        errorElement = document.createElement('div');
+        errorElement.className = 'input-error-message';
+        input.parentNode?.appendChild(errorElement);
     }
-    input.parentNode?.insertBefore(errorElement, input.nextSibling);
+
+    errorElement.innerText = message;
+    input.classList.add('input-error');
 }
 
 function clearError(input: HTMLInputElement) {
-    input.classList.remove('input-error');
-    const nextSibling = input.nextSibling as HTMLElement;
-    if (nextSibling && nextSibling.className === 'input-error-message') {
-        input.parentNode?.removeChild(nextSibling);
+    const errorElement = input.parentNode?.querySelector('.input-error-message') as HTMLElement;
+
+    if (errorElement) {
+        input.parentNode?.removeChild(errorElement);
     }
+
+    input.classList.remove('input-error');
 }

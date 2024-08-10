@@ -1,6 +1,6 @@
 import { BASE_URL } from "../constants/constants.ts";
 import HTTPTransport from "../helpers/HTTPTransport";
-import { UsersRequest, CreateChat, CreateChatResponse } from "../types/types";
+import { UsersRequest, CreateChat, CreateChatResponse, ChangeChatAvatarSubmitData } from "../types/types";
 
 const chatsApi = new HTTPTransport({
     baseUrl: BASE_URL,
@@ -65,5 +65,16 @@ export default class ChatsApi {
         return await chatsApi.get(`/${id}/users`, {
             withCredentials: true
         })
+    }
+
+    async changeAvatar(data: ChangeChatAvatarSubmitData) {
+        const formData = new FormData();
+        formData.append('chatId', data.chatId.toString());
+        formData.append('avatar', data.file);
+
+        return await chatsApi.put('/avatar', {
+            withCredentials: true,
+            data: formData,
+        });
     }
 }

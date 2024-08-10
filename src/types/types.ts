@@ -46,6 +46,11 @@ export type ChatUserResponse = {
     role: string;
 }
 
+export type ChangeChatAvatarSubmitData = {
+    chatId: number;
+    file: File;
+};
+
 export type UsersRequest = {
     users: number[];
     chatId: number;

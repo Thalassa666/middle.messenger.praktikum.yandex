@@ -185,7 +185,6 @@ class ChatsButtons extends Block<ChatsButtonsProps> {
             buttonDeleteChat,
             modalDeleteUser
         }
-        console.log(modalAddUser)
     }
 
     render(): string {

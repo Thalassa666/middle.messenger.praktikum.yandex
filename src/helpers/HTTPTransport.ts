@@ -1,3 +1,5 @@
+import { BASE_URL } from "../constants/constants.ts";
+
 enum METHOD {
     GET = 'GET',
     POST = 'POST',
@@ -35,7 +37,7 @@ type HTTPMethod = (url: string, options: OptionsType) => Promise<XMLHttpRequest>
 export default class HTTPTransport {
     private _baseUrl: string
 
-    constructor({ baseUrl = 'https://ya-praktikum.tech/api/v2', url = '' }: ConstructorOptionsType) {
+    constructor({ baseUrl = BASE_URL, url = '' }: ConstructorOptionsType) {
         this._baseUrl = baseUrl.concat(url)
     }
 
