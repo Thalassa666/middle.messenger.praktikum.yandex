@@ -1,0 +1,19 @@
+.buttonShow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: var(--color-active-item);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+
+    .buttonShow__dot {
+        width: 4px;
+        height: 4px;
+        background: var(--color-primary);
+        border-radius: 50%;
+    }
+}

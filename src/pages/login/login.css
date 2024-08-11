@@ -16,7 +16,7 @@
     padding: 6px;
     border: 2px solid transparent;
     border-radius: 4px;
-    width: 400px;
+    width: 100%;
 }
 
 .input:focus {
@@ -27,6 +27,7 @@
 .login__title {
     color: var(--text-primary);
     font-size: 30px;
+    margin-bottom: 30px;
 }
 
 .input-error {

@@ -1,24 +1,34 @@
 import './body.css';
-import Block, { BlockProps } from '../../../helpers/block';
-import chatBodyTemplate from './body.hbs?raw';
+import Block from '../../../helpers/block';
 
 interface Message {
     text: string;
     isMine: boolean;
 }
 
-export interface ChatBodyProps extends BlockProps {
+export interface ChatBodyProps {
     date: string;
     messages: Message[];
 }
 
 class ChatBody extends Block<ChatBodyProps> {
     constructor(props: ChatBodyProps) {
-        super('div', props);
+        super(props);
     }
 
-    render(): DocumentFragment {
-        return this.compile(chatBodyTemplate, this.props);
+    render(): string {
+        return `
+        <section class="body">
+            <div class="body__date">{{date}}</div>
+            <div class="body__chat">
+                {{#each messages}}
+                    <div class="body__chat_message {{#if this.isMine}}body__chat_message--right{{/if}}">
+                        <div class="message__content">{{this.text}}</div>
+                    </div>
+                {{/each}}
+            </div>
+        </section>
+    `
     }
 }
 

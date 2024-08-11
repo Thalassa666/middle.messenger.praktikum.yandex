@@ -5,5 +5,5 @@ export {
     ChatItem,
     ChatHeader,
 }
-
-
+export default class ListItems {
+}
