@@ -1,9 +1,5 @@
-import ChatHeader from './header';
-import ChatItem from './item';
+import ChatHeader from "./header";
+import ChatItem from "./item";
 
-export {
-    ChatItem,
-    ChatHeader,
-}
-export default class ListItems {
-}
+export { ChatItem, ChatHeader };
+export default class ListItems {}

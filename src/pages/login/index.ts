@@ -1,20 +1,23 @@
-import Block from '../../helpers/block';
-import './login.css';
-import InputForm from '../../components/input';
-import ButtonForm from '../../components/button';
-import { loginValidation, passwordValidation } from '../../helpers/validation.ts';
-import handleSubmit from '../../helpers/submit.ts';
-import Router from '../../helpers/Router.ts';
-import { Routes } from '../../main.ts';
-import { MapStateToProps, connect } from '../../utils/connect.ts';
-import { me, login } from '../../services/Auth.service.ts';
-import { getModel } from '../../utils/model.ts';
-import { Login } from 'types/types.ts';
+import Block from "../../helpers/block";
+import "./login.css";
+import InputForm from "../../components/input";
+import ButtonForm from "../../components/button";
+import { loginValidation, passwordValidation } from "../../helpers/validation";
+import Router from "../../helpers/Router";
+import { Routes } from "../../main";
+import { MapStateToProps, connect } from "../../utils/connect";
+import { me, login } from "../../services/Auth.service";
+import { getModel } from "../../utils/model";
+import { Login, UserResponse } from "../../types/types";
 
 const router = Router;
 
-class LoginPage extends Block {
-    constructor(props = {}) {
+interface LoginPageProps {
+    currentUser: UserResponse | null;
+}
+
+class LoginPage extends Block<LoginPageProps> {
+    constructor(props: LoginPageProps) {
         super({
             ...props,
         });
@@ -22,67 +25,98 @@ class LoginPage extends Block {
 
     init(): void {
         const getUserInfo = async () => {
-            if (this.props.currentUser === null) await me()
-            if (this.props.currentUser !== null) router.go(Routes.Chats)
-        }
+            if (this.props.currentUser === null) await me();
+            if (this.props.currentUser !== null) router.go(Routes.Chats);
+        };
         getUserInfo();
 
         const InputLogin = new InputForm({
-            type: 'text',
-            name: 'login',
-            placeholder: 'логин',
+            type: "text",
+            name: "login",
+            placeholder: "логин",
             events: {
-                blur: [loginValidation]
-            }
+                blur: [loginValidation],
+            },
         });
 
         const InputPassword = new InputForm({
-            type: 'password',
-            name: 'password',
-            placeholder: 'пароль',
+            type: "password",
+            name: "password",
+            placeholder: "пароль",
             events: {
-                blur: [passwordValidation]
-            }
-        })
+                blur: [passwordValidation],
+            },
+        });
 
         const LoginButton = new ButtonForm({
-            className: 'primary-btn',
-            type: 'submit',
-            text: 'Войти',
-            page: 'messenger',
+            className: "primary-btn",
+            type: "submit",
+            text: "Войти",
+            page: "messenger",
             events: {
-                click: [ e => {
-                    login(getModel(e) as Login);
-                    handleSubmit(e);
-                    router.go(Routes.Chats);
-                }]
+                click: [this.handleLogin],
             },
-        })
+        });
 
         const SignupButton = new ButtonForm({
-            className: 'secondary-btn',
-            type: 'button',
-            text: 'Зарегистрироваться',
-            page: 'signin',
+            className: "secondary-btn",
+            type: "button",
+            text: "Зарегистрироваться",
+            page: "signin",
             events: {
-                click: [() => {
-                    router.go(Routes.Register)
-                }]
-            }
-        })
+                click: [
+                    () => {
+                        router.go(Routes.Register);
+                    },
+                ],
+            },
+        });
 
         this.children = {
             ...this.children,
             InputLogin,
             InputPassword,
             LoginButton,
-            SignupButton
+            SignupButton,
+        };
+    }
+
+    handleLogin(e: Event) {
+        e.preventDefault();
+        loginValidation;
+        passwordValidation;
+
+        const form = (e.target as HTMLElement).closest("form");
+        if (!form) return;
+
+        const inputs = form.querySelectorAll("input");
+        let isFormValid = true;
+
+        inputs.forEach((input) => {
+            const blurEvent = new FocusEvent("blur", { relatedTarget: input });
+            input.dispatchEvent(blurEvent);
+
+            if (input.classList.contains("input-error")) {
+                isFormValid = false;
+            }
+        });
+
+        if (isFormValid) {
+            login(getModel(e) as Login);
+            router.go(Routes.Chats);
+        } else {
+            console.log("error validation");
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    componentDidUpdate(oldProps: { [x: string]: any }, newProps: { [x: string]: any }): boolean {
-        if (oldProps.currentUser !== newProps.currentUser && newProps.currentUser !== null) {
+    componentDidUpdate(
+        oldProps: LoginPageProps,
+        newProps: LoginPageProps,
+    ): boolean {
+        if (
+            oldProps.currentUser !== newProps.currentUser &&
+            newProps.currentUser !== null
+        ) {
             router.go(Routes.Chats);
         }
         return true;
@@ -101,10 +135,10 @@ class LoginPage extends Block {
                 </form>
             </div>
         </section>
-        `
+        `;
     }
 }
 
-const mapStateToProps: MapStateToProps = ({currentUser}) => ({currentUser});
+const mapStateToProps: MapStateToProps = ({ currentUser }) => ({ currentUser });
 
 export default connect(mapStateToProps)(LoginPage);

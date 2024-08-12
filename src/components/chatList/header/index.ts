@@ -1,8 +1,8 @@
-import './header.css'
-import Block from '../../../helpers/block.ts';
-import ButtonForm from '../../../components/button';
-import Router from '../../../helpers/Router.ts';
-import { Routes } from '../../../main.ts';
+import "./header.css";
+import Block from "../../../helpers/block.ts";
+import ButtonForm from "../../../components/button";
+import Router from "../../../helpers/Router";
+import { Routes } from "../../../main";
 
 const router = Router;
 
@@ -16,13 +16,17 @@ class Header extends Block {
         super({
             ...props,
             ProfileButton: new ButtonForm({
-                text: 'Профиль',
-                type: 'button',
-                className: 'header__profile-link',
+                text: "Профиль",
+                type: "button",
+                className: "header__profile-link",
                 events: {
-                    click: [() => { router.go(Routes.Profile) }]
+                    click: [
+                        () => {
+                            router.go(Routes.Profile);
+                        },
+                    ],
                 },
-            })
+            }),
         });
     }
 
@@ -46,9 +50,8 @@ class Header extends Block {
             >
           </div>
         </div>
-        `
+        `;
     }
 }
 
 export default Header;
-

@@ -1,5 +1,5 @@
-import './body.css';
-import Block from '../../../helpers/block';
+import "./body.css";
+import Block from "../../../helpers/block";
 
 interface Message {
     text: string;
@@ -28,9 +28,8 @@ class ChatBody extends Block<ChatBodyProps> {
                 {{/each}}
             </div>
         </section>
-    `
+    `;
     }
 }
 
 export default ChatBody;
-

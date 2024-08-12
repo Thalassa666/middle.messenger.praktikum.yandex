@@ -1,31 +1,33 @@
-type CBT = (...args: unknown[]) => void
+type CBT = (...args: unknown[]) => void;
 
-type ListenersType = Record<string, CBT[]>
+type ListenersType = Record<string, CBT[]>;
 
 export default class EventBus {
-    listeners: ListenersType = {}
+    listeners: ListenersType = {};
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    on (event: string, callback: (data?: any) => void): void {
+    on(event: string, callback: (data?: any) => void): void {
         if (!Array.isArray(this.listeners[event])) {
-            this.listeners[event] = []
+            this.listeners[event] = [];
         }
-        this.listeners[event].push(callback)
+        this.listeners[event].push(callback);
     }
 
-    off (event: string, callback: () => void): void {
+    off(event: string, callback: () => void): void {
         if (this.listeners[event] === undefined) {
-            throw new Error(`Нет события: ${event}`)
+            throw new Error(`Нет события: ${event}`);
         }
-        this.listeners[event] = this.listeners[event].filter(listener => listener !== callback)
+        this.listeners[event] = this.listeners[event].filter(
+            (listener) => listener !== callback,
+        );
     }
 
-    emit (event: string, ...args: unknown[]): void {
+    emit(event: string, ...args: unknown[]): void {
         if (this.listeners[event] === undefined) {
-            return
+            return;
         }
         this.listeners[event].forEach(function (listener) {
-            listener(...args)
-        })
+            listener(...args);
+        });
     }
 }

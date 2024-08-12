@@ -1,5 +1,5 @@
-import Block from '../../helpers/block';
-import { EventsType } from "../../types/types.ts";
+import Block from "../../helpers/block";
+import { EventsType } from "../../types/types";
 
 export interface ProfileInputProps {
     label: string;
@@ -18,10 +18,10 @@ class ProfileInput extends Block<ProfileInputProps> {
     _addEvents() {
         super._addEvents();
 
-        const inputElement = this.getContent()?.querySelector('input');
+        const inputElement = this.getContent()?.querySelector("input");
         if (inputElement && this.props.events?.blur) {
-            this.props.events.blur.forEach(func => {
-                inputElement.addEventListener('blur', func);
+            this.props.events.blur.forEach((func) => {
+                inputElement.addEventListener("blur", func);
             });
         }
     }
