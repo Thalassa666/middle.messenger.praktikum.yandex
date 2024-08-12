@@ -14,7 +14,8 @@
         "lint": "eslint .",
         "lint:styles": "stylelint 'src/**/*.css'",
         "prepare": "husky install",
-        "test": "mocha"
+        "test": "mocha",
+        "precommit": "npx lint-staged && npm test"
     },
     "lint-staged": {
         "**/*.ts": [
