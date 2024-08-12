@@ -1,128 +1,161 @@
-import './signin.css';
-import '../../style.css';
-import Block from '../../helpers/block';
-import InputForm from '../../components/input';
-import ButtonForm from '../../components/button';
+import "./signin.css";
+import "../../style.css";
+import Block from "../../helpers/block";
+import InputForm from "../../components/input";
+import ButtonForm from "../../components/button";
 import {
     emailValidation,
     firstNameValidation,
     loginValidation,
-    passwordValidation, phoneValidation,
-    secondNameValidation
-} from '../../helpers/validation.ts';
-import Router from '../../helpers/Router.ts';
-import { connect, MapStateToProps } from '../../utils/connect.ts';
-import { me, create } from '../../services/Auth.service.ts';
-import { Routes } from '../../main.ts';
-import { getModel } from '../../utils/model.ts';
-import { CreateUser } from 'types/types.ts';
-import handleSubmit from '../../helpers/submit.ts';
+    passwordValidation,
+    phoneValidation,
+    secondNameValidation,
+} from "../../helpers/validation";
+import Router from "../../helpers/Router";
+import { connect, MapStateToProps } from "../../utils/connect";
+import { me, create } from "../../services/Auth.service";
+import { Routes } from "../../main";
+import { getModel } from "../../utils/model";
+import { CreateUser } from "../../types/types";
 
 const router = Router;
 
-type RegType = Record<string, InputForm | ButtonForm>
+type RegType = Record<string, InputForm | ButtonForm>;
 
 class SigninPage extends Block<RegType> {
     constructor(props = {}) {
         super({
             ...props,
             InputEmail: new InputForm({
-                type: 'email',
-                name: 'email',
-                placeholder: 'почта',
+                type: "email",
+                name: "email",
+                placeholder: "почта",
                 events: {
-                    blur: [emailValidation]
-                }
+                    blur: [emailValidation],
+                },
             }),
 
             InputLogin: new InputForm({
-                type: 'text',
-                name: 'login',
-                placeholder: 'логин',
+                type: "text",
+                name: "login",
+                placeholder: "логин",
                 events: {
-                    blur: [loginValidation]
-                }
+                    blur: [loginValidation],
+                },
             }),
 
             InputFirstName: new InputForm({
-                type: 'text',
-                name: 'first_name',
-                placeholder: 'имя',
+                type: "text",
+                name: "first_name",
+                placeholder: "имя",
                 events: {
-                    blur: [firstNameValidation]
-                }
+                    blur: [firstNameValidation],
+                },
             }),
 
             InputSecondName: new InputForm({
-                type: 'text',
-                name: 'second_name',
-                placeholder: 'фамилия',
+                type: "text",
+                name: "second_name",
+                placeholder: "фамилия",
                 events: {
-                    blur: [secondNameValidation]
-                }
+                    blur: [secondNameValidation],
+                },
             }),
 
             InputPhone: new InputForm({
-                type: 'phone',
-                name: 'phone',
-                placeholder: 'телефон',
+                type: "phone",
+                name: "phone",
+                placeholder: "телефон",
                 events: {
-                    blur: [phoneValidation]
-                }
+                    blur: [phoneValidation],
+                },
             }),
 
             InputPassword: new InputForm({
-                type: 'password',
-                name: 'password',
-                placeholder: 'пароль',
+                type: "password",
+                name: "password",
+                placeholder: "пароль",
                 events: {
-                    blur: [passwordValidation]
-                }
+                    blur: [passwordValidation],
+                },
             }),
 
             InputConfirmPassword: new InputForm({
-                type: 'password',
-                name: 'confirm_password',
-                placeholder: 'пароль еще раз',
+                type: "password",
+                name: "confirm_password",
+                placeholder: "пароль еще раз",
                 events: {
-                    blur: [passwordValidation]
-                }
-            }),
-
-            SignupButton: new ButtonForm({
-                className: 'primary-btn',
-                type: 'submit',
-                text: 'Зарегистрироваться',
-                page: 'main',
-                events: {
-                    click:  [e => {
-                        create(getModel(e) as CreateUser);
-                        handleSubmit(e);
-                        router.go(Routes.Chats);
-                    }]
-                }
+                    blur: [passwordValidation],
+                },
             }),
 
             LoginButton: new ButtonForm({
-                className: 'secondary-btn',
-                type: 'button',
-                text: 'Войти',
-                page: 'login',
+                className: "secondary-btn",
+                type: "button",
+                text: "Войти",
+                page: "login",
                 events: {
-                    click: [() => {
-                        router.go('/')
-                    }]
-                }
+                    click: [
+                        () => {
+                            router.go("/");
+                        },
+                    ],
+                },
             }),
         });
     }
 
     init(): void {
         const getUserInfo = async () => {
-            if (this.props.currentUser === null) await me()
-            if (this.props.currentUser !== null) router.go(Routes.Chats)
+            if (this.props.currentUser === null) await me();
+            if (this.props.currentUser !== null) router.go(Routes.Chats);
+        };
+        getUserInfo();
+
+        const SignupButton = new ButtonForm({
+            className: "primary-btn",
+            type: "submit",
+            text: "Зарегистрироваться",
+            page: "main",
+            events: {
+                click: [this.handleReg],
+            },
+        });
+
+        this.children = {
+            ...this.children,
+            SignupButton,
+        };
+    }
+
+    handleReg(e: Event) {
+        e.preventDefault();
+        emailValidation;
+        firstNameValidation;
+        loginValidation;
+        passwordValidation;
+        phoneValidation;
+        secondNameValidation;
+
+        const form = (e.target as HTMLElement).closest("form");
+        if (!form) return;
+
+        const inputs = form.querySelectorAll("input");
+        let isFormValid = true;
+
+        inputs.forEach((input) => {
+            const blurEvent = new FocusEvent("blur", { relatedTarget: input });
+            input.dispatchEvent(blurEvent);
+
+            if (input.classList.contains("input-error")) {
+                isFormValid = false;
+            }
+        });
+
+        if (isFormValid) {
+            create(getModel(e) as CreateUser);
+            router.go(Routes.Chats);
         }
-        getUserInfo()
     }
 
     render(): string {
@@ -143,10 +176,10 @@ class SigninPage extends Block<RegType> {
                 </form>
             </div>
         </section>
-        `
+        `;
     }
 }
 
-const mapStateToProps: MapStateToProps = ({currentUser}) => ({currentUser});
+const mapStateToProps: MapStateToProps = ({ currentUser }) => ({ currentUser });
 
 export default connect(mapStateToProps)(SigninPage);

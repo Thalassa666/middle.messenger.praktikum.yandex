@@ -8,7 +8,7 @@ class Router {
     routes: Route[] = [];
     history: History = window.history;
     private _currentRoute: Route | null = null;
-    private _rootQuery: string = '';
+    private _rootQuery: string = "";
     private static __instance: Router;
 
     constructor(rootQuery: string) {
@@ -24,8 +24,13 @@ class Router {
         Router.__instance = this;
     }
 
-    use(pathname: string, block: Constructable<Block<Record<string, unknown>>>) {
-        const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+    use(
+        pathname: string,
+        block: Constructable<Block<Record<string, unknown>>>,
+    ) {
+        const route = new Route(pathname, block, {
+            rootQuery: this._rootQuery,
+        });
 
         this.routes.push(route);
 
@@ -34,15 +39,15 @@ class Router {
 
     start = () => {
         const listener = ((event: PopStateEvent) => {
-            console.log('popstate');
-            const target = event.currentTarget as Window
+            console.log("popstate");
+            const target = event.currentTarget as Window;
             this._onRoute(target.location.pathname);
-        }).bind(this)
+        }).bind(this);
 
-        window.addEventListener('popstate', listener);
+        window.addEventListener("popstate", listener);
 
         this._onRoute(window.location.pathname);
-    }
+    };
 
     _onRoute(pathname: string) {
         const route = this.getRoute(pathname);
@@ -59,7 +64,7 @@ class Router {
     }
 
     go(pathname: string) {
-        this.history.pushState({}, '', pathname);
+        this.history.pushState({}, "", pathname);
         this._onRoute(pathname);
     }
 
@@ -72,14 +77,14 @@ class Router {
     }
 
     getRoute(pathname: string) {
-        const route = this.routes.find(route => route.match(pathname));
-        console.log('getRoute', route);
+        const route = this.routes.find((route) => route.match(pathname));
+        console.log("getRoute", route);
 
         if (!route) {
-            return this.routes.find(route => route.match('*'))
+            return this.routes.find((route) => route.match("*"));
         }
-        return route
+        return route;
     }
 }
 
-export default new Router('#app')
+export default new Router("#app");

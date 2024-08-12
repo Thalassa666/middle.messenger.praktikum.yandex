@@ -1,21 +1,29 @@
-import type Block from '../helpers/block.ts';
+import type Block from "../helpers/block.ts";
 
-export function InputValidation (this: Block, event: Event, input: Block, errorText: string = 'Некорректное значение', ...conditions: RegExp[]): void {
-    const el = event.target as HTMLInputElement
-    const inputValue = el.value
-    const valid = validate(inputValue, ...conditions)
-    valid ? input.setProps({ error: false, errorText: '' }) : input.setProps({ error: true, errorText })
-    this.setProps({ [input.props.name as string]: inputValue })
+export function InputValidation(
+    this: Block,
+    event: Event,
+    input: Block,
+    errorText: string = "Некорректное значение",
+    ...conditions: RegExp[]
+): void {
+    const el = event.target as HTMLInputElement;
+    const inputValue = el.value;
+    const valid = validate(inputValue, ...conditions);
+    valid
+        ? input.setProps({ error: false, errorText: "" })
+        : input.setProps({ error: true, errorText });
+    this.setProps({ [input.props.name as string]: inputValue });
 }
 
 export function validate(str: string, ...conditions: RegExp[]): boolean {
-    let valid = true
-    conditions.forEach(condition => {
+    let valid = true;
+    conditions.forEach((condition) => {
         if (condition.test(str) === false) {
-            valid = false
+            valid = false;
         }
-    })
-    return valid
+    });
+    return valid;
 }
 
 export const conditions = {
@@ -23,5 +31,5 @@ export const conditions = {
     password: [/[A-Z]/, /[a-z]/, /[0-9]/, /[^.$]{8,40}/],
     email: [/^[\w-]+@[a-zA-Z]+\.[a-zA-Z]+$/],
     phone: [/^\+?\d{10,15}$/],
-    names: [/^[A-ZА-Я][A-Za-zА-Яа-я-]+$/]
-}
+    names: [/^[A-ZА-Я][A-Za-zА-Яа-я-]+$/],
+};

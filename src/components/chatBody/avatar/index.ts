@@ -1,6 +1,6 @@
-import Block from '../../../helpers/block';
-import { EventsType } from "../../../types/types.ts";
-import './avatar.css';
+import Block from "../../../helpers/block";
+import { EventsType } from "../../../types/types";
+import "./avatar.css";
 
 export interface ChatAvatarProps {
     name: string;
@@ -29,7 +29,7 @@ class ChatAvatar extends Block<ChatAvatarProps> {
             {{/if}}
           </div>
         </div>
-        `
+        `;
     }
 }
 

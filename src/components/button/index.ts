@@ -1,5 +1,5 @@
-import Block from '../../helpers/block.ts';
-import { EventsType } from '../../types/types.ts';
+import Block from "../../helpers/block.ts";
+import { EventsType } from "../../types/types.ts";
 
 interface ButtonProps {
     text: string;
@@ -7,7 +7,7 @@ interface ButtonProps {
     className?: string;
     page?: string;
     img?: string;
-    events: EventsType
+    events: EventsType;
 }
 
 export default class ButtonForm extends Block<ButtonProps> {
@@ -20,6 +20,6 @@ export default class ButtonForm extends Block<ButtonProps> {
     render(): string {
         return `
         <button class="{{className}}" type="{{type}}" data-page="{{page}}">{{text}}</button>
-        `
+        `;
     }
 }

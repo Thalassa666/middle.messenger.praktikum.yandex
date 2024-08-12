@@ -1,18 +1,18 @@
-import Block from '../../helpers/block.ts';
-import './buttonDel.css';
+import Block from "../../helpers/block.ts";
+import "./buttonDel.css";
 import { EventsType } from "../../types/types";
 
 type ButtonDelProps = {
     events?: EventsType;
     className?: string;
     title?: string;
-}
+};
 
 class ButtonDel extends Block<ButtonDelProps> {
     constructor(props: ButtonDelProps) {
         super({
-            ...props
-        })
+            ...props,
+        });
     }
 
     render(): string {
@@ -26,8 +26,8 @@ class ButtonDel extends Block<ButtonDelProps> {
                 </div>
                 {{title}}
             </div>
-        `
+        `;
     }
 }
 
-export default ButtonDel
+export default ButtonDel;

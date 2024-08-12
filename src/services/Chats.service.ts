@@ -1,14 +1,14 @@
-import ChatsApi from '../api/Chats.api';
-import Router from '../helpers/Router.ts';
-import Store from '../helpers/Store.ts';
-import { Routes } from '../main.ts';
+import ChatsApi from "../api/Chats.api";
+import Router from "../helpers/Router";
+import Store from "../helpers/Store";
+import { Routes } from "../main";
 import {
     UsersRequest,
     ChatsResponse,
     CreateChat,
     CreateChatResponse,
-    ChangeChatAvatarSubmitData
-} from '../types/types.ts';
+    ChangeChatAvatarSubmitData,
+} from "../types/types.ts";
 
 const router = Router;
 const store = Store;
@@ -17,246 +17,255 @@ const chatsApi = new ChatsApi();
 export const loadChats = async () => {
     try {
         const data = await chatsApi.getChats();
-        const { response, status } = data
-        const responseParse = JSON.parse(response)
+        const { response, status } = data;
+        const responseParse = JSON.parse(response);
         switch (status) {
             case 200:
-                store.set({ chats: responseParse })
-                store.set({ getChatsError: null })
+                store.set({ chats: responseParse });
+                store.set({ getChatsError: null });
                 break;
             case 401:
-                store.set({ getChatsError: responseParse })
-                store.set({ chats: [] })
-                router.go(Routes.Login)
+                store.set({ getChatsError: responseParse });
+                store.set({ chats: [] });
+                router.go(Routes.Login);
                 break;
             case 500:
-                store.set({ getChatsError: responseParse })
-                store.set({ chats: [] })
+                store.set({ getChatsError: responseParse });
+                store.set({ chats: [] });
                 break;
             default:
-                store.set({ getChatsError: { reason: "Неизвестная ошибка" } })
+                store.set({ getChatsError: { reason: "Неизвестная ошибка" } });
                 break;
         }
-
     } catch (error) {
-        console.error(error)
-        store.set({ getChatsError: { reason: "Неизвестная ошибка" } })
+        console.error(error);
+        store.set({ getChatsError: { reason: "Неизвестная ошибка" } });
     }
-}
+};
 
 export const createChat = async (title: CreateChat) => {
     try {
         const data = await chatsApi.createChat(title);
-        const { response, status } = data
-        const responseParse = JSON.parse(response)
+        const { response, status } = data;
+        const responseParse = JSON.parse(response);
         switch (status) {
             case 200:
-                loadChats()
-                store.set({ createChatsError: null })
+                loadChats();
+                store.set({ createChatsError: null });
                 break;
             case 400:
-                loadChats()
-                store.set({ createChatsError: responseParse })
+                loadChats();
+                store.set({ createChatsError: responseParse });
                 break;
             case 401:
-                store.set({ createChatsError: responseParse })
-                store.set({ chats: [] })
-                router.go(Routes.Login)
+                store.set({ createChatsError: responseParse });
+                store.set({ chats: [] });
+                router.go(Routes.Login);
                 break;
             case 500:
-                store.set({ createChatsError: responseParse })
-                store.set({ chats: [] })
-                router.go(Routes.Error)
+                store.set({ createChatsError: responseParse });
+                store.set({ chats: [] });
+                router.go(Routes.Error);
                 break;
             default:
-                store.set({ createChatsError: { reason: "Неизвестная ошибка" } })
+                store.set({
+                    createChatsError: { reason: "Неизвестная ошибка" },
+                });
                 break;
         }
-
     } catch (error) {
-        console.error(error)
-        store.set({ createChatsError: { reason: "Неизвестная ошибка" } })
+        console.error(error);
+        store.set({ createChatsError: { reason: "Неизвестная ошибка" } });
     }
-}
+};
 
 export const addUserToChat = async (userData: UsersRequest) => {
     try {
         const data = await chatsApi.addUserToChat(userData);
-        const { response, status } = data
-        const responseParse = JSON.parse(response)
+        const { response, status } = data;
+        const responseParse = JSON.parse(response);
         switch (status) {
             case 200:
-                store.set({ addUserToChatError: null })
+                store.set({ addUserToChatError: null });
                 break;
             case 400:
-                loadChats()
-                store.set({ addUserToChatError: responseParse })
+                loadChats();
+                store.set({ addUserToChatError: responseParse });
                 break;
             case 401:
-                store.set({ addUserToChatError: responseParse })
-                router.go(Routes.Login)
+                store.set({ addUserToChatError: responseParse });
+                router.go(Routes.Login);
                 break;
             case 500:
-                store.set({ addUserToChatsError: responseParse })
-                router.go(Routes.Error)
+                store.set({ addUserToChatsError: responseParse });
+                router.go(Routes.Error);
                 break;
             default:
-                store.set({ addUserToChatError: { reason: "Неизвестная ошибка" } })
+                store.set({
+                    addUserToChatError: { reason: "Неизвестная ошибка" },
+                });
                 break;
         }
-
     } catch (error) {
-        console.error(error)
-        store.set({ addUserToChatError: { reason: "Неизвестная ошибка" } })
+        console.error(error);
+        store.set({ addUserToChatError: { reason: "Неизвестная ошибка" } });
     }
-}
+};
 
 export const deleteUserFromChat = async (userData: UsersRequest) => {
     try {
         const data = await chatsApi.deleteUserFromChat(userData);
-        const { response, status } = data
-        const responseParse = JSON.parse(response)
+        const { response, status } = data;
+        const responseParse = JSON.parse(response);
         switch (status) {
             case 200:
-                store.set({ deleteUserFromChatError: null })
+                store.set({ deleteUserFromChatError: null });
                 break;
             case 400:
-                loadChats()
-                store.set({ deleteUserFromChatError: responseParse })
+                loadChats();
+                store.set({ deleteUserFromChatError: responseParse });
                 break;
             case 401:
-                store.set({ deleteUserFromChatError: responseParse })
-                router.go(Routes.Login)
+                store.set({ deleteUserFromChatError: responseParse });
+                router.go(Routes.Login);
                 break;
             case 500:
-                store.set({ deleteUserFromChatError: responseParse })
-                router.go(Routes.Error)
+                store.set({ deleteUserFromChatError: responseParse });
+                router.go(Routes.Error);
                 break;
             default:
-                store.set({ deleteUserFromChatError: { reason: "Неизвестная ошибка" } })
+                store.set({
+                    deleteUserFromChatError: { reason: "Неизвестная ошибка" },
+                });
                 break;
         }
-
     } catch (error) {
-        console.error(error)
-        store.set({ deleteUserFromChatError: { reason: "Неизвестная ошибка" } })
+        console.error(error);
+        store.set({
+            deleteUserFromChatError: { reason: "Неизвестная ошибка" },
+        });
     }
-}
+};
 
 export const setActiveChat = (activeChat: ChatsResponse) => {
     store.set({ activeChat });
-}
+};
 
 export const deleteChat = async (model: CreateChatResponse) => {
     try {
         const data = await chatsApi.deleteChat(model);
-        const { response, status } = data
-        const responseParse = JSON.parse(response)
+        const { response, status } = data;
+        const responseParse = JSON.parse(response);
         switch (status) {
             case 200:
-                store.set({ deleteChatError: null })
-                store.set({ activeChat: null })
-                await loadChats()
+                store.set({ deleteChatError: null });
+                store.set({ activeChat: null });
+                await loadChats();
                 break;
             case 400:
-                loadChats()
-                store.set({ deleteChatError: responseParse })
+                loadChats();
+                store.set({ deleteChatError: responseParse });
                 break;
             case 401:
-                store.set({ deleteChatError: responseParse })
-                router.go(Routes.Login)
+                store.set({ deleteChatError: responseParse });
+                router.go(Routes.Login);
                 break;
             case 403:
-                store.set({ deleteChatError: responseParse })
-                router.go(Routes.Login)
+                store.set({ deleteChatError: responseParse });
+                router.go(Routes.Login);
                 break;
             case 500:
-                store.set({ deleteChatError: responseParse })
-                router.go(Routes.Error)
+                store.set({ deleteChatError: responseParse });
+                router.go(Routes.Error);
                 break;
             default:
-                store.set({ deleteChatError: { reason: "Неизвестная ошибка" } })
+                store.set({
+                    deleteChatError: { reason: "Неизвестная ошибка" },
+                });
                 break;
         }
-
     } catch (error) {
-        console.error(error)
-        store.set({ deleteChatError: { reason: "Неизвестная ошибка" } })
+        console.error(error);
+        store.set({ deleteChatError: { reason: "Неизвестная ошибка" } });
     }
-}
+};
 
 export const getActiveChatUsers = async (id: number) => {
     try {
         const data = await chatsApi.getActiveChatUsers(id);
-        const { response, status } = data
-        const responseParse = JSON.parse(response)
+        const { response, status } = data;
+        const responseParse = JSON.parse(response);
         switch (status) {
             case 200:
-                store.set({ activeChatUsers: responseParse })
-                store.set({ getActiveChatUsersError: null })
+                store.set({ activeChatUsers: responseParse });
+                store.set({ getActiveChatUsersError: null });
                 break;
             case 400:
-                store.set({ activeChatUsers: [] })
-                store.set({ getActiveChatUsersError: responseParse })
+                store.set({ activeChatUsers: [] });
+                store.set({ getActiveChatUsersError: responseParse });
                 break;
             case 401:
-                store.set({ activeChatUsers: [] })
-                store.set({ getActiveChatUsersError: responseParse })
-                router.go(Routes.Login)
+                store.set({ activeChatUsers: [] });
+                store.set({ getActiveChatUsersError: responseParse });
+                router.go(Routes.Login);
                 break;
             case 404:
-                store.set({ activeChatUsers: [] })
-                store.set({ getActiveChatUsersError: responseParse })
-                router.go(Routes.Error)
+                store.set({ activeChatUsers: [] });
+                store.set({ getActiveChatUsersError: responseParse });
+                router.go(Routes.Error);
                 break;
             case 500:
-                store.set({ activeChatUsers: [] })
-                store.set({ getActiveChatUsersError: responseParse })
-                router.go(Routes.Error)
+                store.set({ activeChatUsers: [] });
+                store.set({ getActiveChatUsersError: responseParse });
+                router.go(Routes.Error);
                 break;
             default:
-                store.set({ getActiveChatUsersError: { reason: "Неизвестная ошибка" } })
+                store.set({
+                    getActiveChatUsersError: { reason: "Неизвестная ошибка" },
+                });
                 break;
         }
-
     } catch (error) {
-        console.error(error)
-        store.set({ getActiveChatUsersError: { reason: "Неизвестная ошибка" } })
+        console.error(error);
+        store.set({
+            getActiveChatUsersError: { reason: "Неизвестная ошибка" },
+        });
     }
-}
+};
 
 export const getToken = async (chatId: number) => {
     try {
-        const data = await chatsApi.getToken(chatId)
-        const { response, status } = data
-        const responseParse = JSON.parse(response)
+        const data = await chatsApi.getToken(chatId);
+        const { response, status } = data;
+        const responseParse = JSON.parse(response);
         switch (status) {
             case 200:
-                store.set({ token: responseParse })
-                store.set({ getTokenError: null })
-                return JSON.parse(response)
+                store.set({ token: responseParse });
+                store.set({ getTokenError: null });
+                return JSON.parse(response);
             case 401:
-                store.set({ token: undefined })
-                store.set({ getTokenError: responseParse })
-                router.go(Routes.Login)
+                store.set({ token: undefined });
+                store.set({ getTokenError: responseParse });
+                router.go(Routes.Login);
                 break;
             case 500:
-                store.set({ token: undefined })
-                store.set({ getTokenError: responseParse })
-                router.go(Routes.Error)
+                store.set({ token: undefined });
+                store.set({ getTokenError: responseParse });
+                router.go(Routes.Error);
                 break;
             default:
-                store.set({ getTokenError: { reason: "Неизвестная ошибка" } })
+                store.set({ getTokenError: { reason: "Неизвестная ошибка" } });
                 break;
         }
-
     } catch (e) {
-        store.set({ getTokenError: { reason: "Неизвестная ошибка" } })
+        store.set({ getTokenError: { reason: "Неизвестная ошибка" } });
         console.error(e);
     }
-}
+};
 
-export const updateChatAvatar = async (formData: ChangeChatAvatarSubmitData) => {
+export const updateChatAvatar = async (
+    formData: ChangeChatAvatarSubmitData,
+) => {
     try {
         const data = await chatsApi.changeAvatar(formData);
         const { response, status } = data;
@@ -271,9 +280,11 @@ export const updateChatAvatar = async (formData: ChangeChatAvatarSubmitData) => 
                         avatar: responseParse.avatar,
                     };
 
-                    const chats = store.getState().chats?.map((chat: ChatsResponse) =>
-                        chat.id === updatedChat.id ? updatedChat : chat
-                    );
+                    const chats = store
+                        .getState()
+                        .chats?.map((chat: ChatsResponse) =>
+                            chat.id === updatedChat.id ? updatedChat : chat,
+                        );
 
                     store.set({
                         activeChat: updatedChat,
@@ -295,7 +306,9 @@ export const updateChatAvatar = async (formData: ChangeChatAvatarSubmitData) => 
                 router.go(Routes.Error);
                 break;
             default:
-                store.set({ changeChatAvatarError: { reason: "Неизвестная ошибка" } });
+                store.set({
+                    changeChatAvatarError: { reason: "Неизвестная ошибка" },
+                });
                 break;
         }
     } catch (error) {

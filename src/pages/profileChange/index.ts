@@ -1,24 +1,25 @@
-import Block from '../../helpers/block';
-import '../profile/profile.css';
-import '../../style.css';
-import Avatar from '../../components/avatar';
-import ProfileInput from '../../components/profileInput';
-import ButtonForm from '../../components/button';
+import Block from "../../helpers/block";
+import "../profile/profile.css";
+import "../../style.css";
+import Avatar from "../../components/avatar";
+import ProfileInput from "../../components/profileInput";
+import ButtonForm from "../../components/button";
 import {
     emailValidation,
     firstNameValidation,
-    loginValidation, passwordValidation,
+    loginValidation,
+    passwordValidation,
     phoneValidation,
-    secondNameValidation
-} from '../../helpers/validation.ts';
-import { connect, MapStateToProps } from '../../utils/connect.ts';
-import { me } from '../../services/Auth.service.ts';
-import { UserResponse, UserUpdateRequest } from 'types/types.ts';
-import { changeAvatar, changeUserData } from '../../services/Users.service.ts';
-import { getModel } from '../../utils/model.ts';
-import { BASE_URL } from '../../constants/constants.ts';
-import Router from '../../helpers/Router.ts';
-import { Routes } from '../../main.ts';
+    secondNameValidation,
+} from "../../helpers/validation";
+import { connect, MapStateToProps } from "../../utils/connect";
+import { me } from "../../services/Auth.service";
+import { UserResponse, UserUpdateRequest } from "../../types/types";
+import { changeAvatar, changeUserData } from "../../services/Users.service";
+import { getModel } from "../../utils/model";
+import { BASE_URL } from "../../constants/constants";
+import Router from "../../helpers/Router";
+import { Routes } from "../../main";
 
 const router = Router;
 
@@ -31,95 +32,97 @@ class ProfileChange extends Block<ProfileChangeProps> {
         super({
             ...props,
             Avatar: new Avatar({
-                title: props.currentUser?.display_name || '',
-                avatar: props.currentUser?.avatar ? `${BASE_URL}/resources${props.currentUser.avatar}` : '/images/avatar.png',
-                name: 'Avatar',
+                title: props.currentUser?.display_name || "",
+                avatar: props.currentUser?.avatar
+                    ? `${BASE_URL}/resources${props.currentUser.avatar}`
+                    : "/images/avatar.png",
+                name: "Avatar",
                 changeAvatar: true,
                 events: {
-                    change: [(e: Event) => this.handleAvatarChange(e)]
-                }
+                    change: [(e: Event) => this.handleAvatarChange(e)],
+                },
             }),
         });
     }
 
     init(): void {
         const getUserInfo = async () => {
-            if (this.props.currentUser === null) await me()
-        }
+            if (this.props.currentUser === null) await me();
+        };
         getUserInfo();
 
         const EmailInput = new ProfileInput({
-            label: 'почта',
-            profileInputValue: this.props.currentUser?.email || '',
+            label: "почта",
+            profileInputValue: this.props.currentUser?.email || "",
             isReadOnly: false,
-            name: 'email',
-            profileInputType: 'email',
+            name: "email",
+            profileInputType: "email",
             events: {
-                blur: [emailValidation]
-            }
+                blur: [emailValidation],
+            },
         });
 
         const LoginInput = new ProfileInput({
-            label: 'логин',
-            profileInputValue: this.props.currentUser?.login || '',
+            label: "логин",
+            profileInputValue: this.props.currentUser?.login || "",
             isReadOnly: false,
-            name: 'login',
-            profileInputType: 'text',
+            name: "login",
+            profileInputType: "text",
             events: {
-                blur: [loginValidation]
-            }
+                blur: [loginValidation],
+            },
         });
 
-            const FirstNameInput = new ProfileInput({
-            label: 'имя',
-            profileInputValue: this.props.currentUser?.first_name || '',
+        const FirstNameInput = new ProfileInput({
+            label: "имя",
+            profileInputValue: this.props.currentUser?.first_name || "",
             isReadOnly: false,
-            name: 'first_name',
-            profileInputType: 'text',
+            name: "first_name",
+            profileInputType: "text",
             events: {
-                blur: [firstNameValidation]
-            }
+                blur: [firstNameValidation],
+            },
         });
 
         const SecondNameInput = new ProfileInput({
-            label: 'фамилия',
-            profileInputValue: this.props.currentUser?.second_name || '',
+            label: "фамилия",
+            profileInputValue: this.props.currentUser?.second_name || "",
             isReadOnly: false,
-            name: 'second_name',
-            profileInputType: 'text',
+            name: "second_name",
+            profileInputType: "text",
             events: {
-                blur: [secondNameValidation]
-            }
+                blur: [secondNameValidation],
+            },
         });
 
         const DisplayNameInput = new ProfileInput({
-            label: 'имя в чате',
-            profileInputValue: this.props.currentUser?.display_name || '',
+            label: "имя в чате",
+            profileInputValue: this.props.currentUser?.display_name || "",
             isReadOnly: false,
-            name: 'display_name',
-            profileInputType: 'text',
+            name: "display_name",
+            profileInputType: "text",
         });
 
         const PhoneInput = new ProfileInput({
-            label: 'телефон',
-            profileInputValue: this.props.currentUser?.phone || '',
+            label: "телефон",
+            profileInputValue: this.props.currentUser?.phone || "",
             isReadOnly: false,
-            name: 'phone',
-            profileInputType: 'phone',
+            name: "phone",
+            profileInputType: "phone",
             events: {
-                blur: [phoneValidation]
-            }
+                blur: [phoneValidation],
+            },
         });
 
         const SaveButton = new ButtonForm({
-            className: 'primary-btn',
-            text: 'Сохранить данные',
-            type: 'submit',
-            page: 'settings',
+            className: "primary-btn",
+            text: "Сохранить данные",
+            type: "submit",
+            page: "settings",
             events: {
-                click: [this.handleSave]
-            }
-        })
+                click: [this.handleSave],
+            },
+        });
 
         this.children = {
             ...this.children,
@@ -130,7 +133,7 @@ class ProfileChange extends Block<ProfileChangeProps> {
             DisplayNameInput,
             PhoneInput,
             SaveButton,
-        }
+        };
     }
 
     async handleAvatarChange(e: Event) {
@@ -148,40 +151,57 @@ class ProfileChange extends Block<ProfileChangeProps> {
         secondNameValidation;
         passwordValidation;
 
-        const form = (e.target as HTMLElement).closest('form');
+        const form = (e.target as HTMLElement).closest("form");
         if (!form) return;
 
-        const inputs = form.querySelectorAll('input');
+        const inputs = form.querySelectorAll("input");
         let isFormValid = true;
 
-        inputs.forEach(input => {
-            const blurEvent = new FocusEvent('blur', { relatedTarget: input });
+        inputs.forEach((input) => {
+            const blurEvent = new FocusEvent("blur", { relatedTarget: input });
             input.dispatchEvent(blurEvent);
 
-            if (input.classList.contains('input-error')) {
+            if (input.classList.contains("input-error")) {
                 isFormValid = false;
             }
         });
 
         if (isFormValid) {
-            changeUserData({ ...getModel(e) as UserUpdateRequest });
+            changeUserData({ ...(getModel(e) as UserUpdateRequest) });
             router.go(Routes.Profile);
         } else {
-            console.log('error form validation');
+            console.log("error form validation");
         }
     }
 
-    componentDidUpdate(oldProps: ProfileChangeProps, newProps: ProfileChangeProps): boolean {
+    componentDidUpdate(
+        oldProps: ProfileChangeProps,
+        newProps: ProfileChangeProps,
+    ): boolean {
         if (oldProps.currentUser !== newProps.currentUser) {
-            this.children.EmailInput.setProps({ profileInputValue: newProps.currentUser?.email });
-            this.children.LoginInput.setProps({ profileInputValue: newProps.currentUser?.login });
-            this.children.FirstNameInput.setProps({ profileInputValue: newProps.currentUser?.first_name });
-            this.children.SecondNameInput.setProps({ profileInputValue: newProps.currentUser?.second_name });
-            this.children.DisplayNameInput.setProps({ profileInputValue: newProps.currentUser?.display_name });
-            this.children.PhoneInput.setProps({ profileInputValue: newProps.currentUser?.phone });
+            this.children.EmailInput.setProps({
+                profileInputValue: newProps.currentUser?.email,
+            });
+            this.children.LoginInput.setProps({
+                profileInputValue: newProps.currentUser?.login,
+            });
+            this.children.FirstNameInput.setProps({
+                profileInputValue: newProps.currentUser?.first_name,
+            });
+            this.children.SecondNameInput.setProps({
+                profileInputValue: newProps.currentUser?.second_name,
+            });
+            this.children.DisplayNameInput.setProps({
+                profileInputValue: newProps.currentUser?.display_name,
+            });
+            this.children.PhoneInput.setProps({
+                profileInputValue: newProps.currentUser?.phone,
+            });
             this.children.Avatar.setProps({
-                title: newProps.currentUser?.display_name || '',
-                avatar: newProps.currentUser?.avatar ? `${BASE_URL}/resources${newProps.currentUser?.avatar}` : '/images/avatar.png',
+                title: newProps.currentUser?.display_name || "",
+                avatar: newProps.currentUser?.avatar
+                    ? `${BASE_URL}/resources${newProps.currentUser?.avatar}`
+                    : "/images/avatar.png",
             });
             return true;
         }
@@ -206,10 +226,10 @@ class ProfileChange extends Block<ProfileChangeProps> {
                 </form>
             </div>
         </section>
-        `
+        `;
     }
 }
 
-const mapStateToProps: MapStateToProps = ({currentUser}) => ({currentUser});
+const mapStateToProps: MapStateToProps = ({ currentUser }) => ({ currentUser });
 
 export default connect(mapStateToProps)(ProfileChange);

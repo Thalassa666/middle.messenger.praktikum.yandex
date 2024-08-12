@@ -1,54 +1,54 @@
-import Block from '../../../helpers/block';
-import './menu.css';
-import MenuButton from '../menuButton';
-import ChatButtons from '../buttons';
+import Block from "../../../helpers/block";
+import "./menu.css";
+import MenuButton from "../menuButton";
+import ChatButtons from "../buttons";
 
 class Menu extends Block<Record<string, string | boolean>> {
-
     constructor(props: Record<string, string | boolean>) {
         super({
-            ...props
-        })
-        this.setProps({showPanel: false})
+            ...props,
+        });
+        this.setProps({ showPanel: false });
     }
 
     init() {
-        const toggleBind = this._toggleMenu.bind(this)
+        const toggleBind = this._toggleMenu.bind(this);
         const buttonShow = new MenuButton({
-            className: 'chatControl__buttonShow',
+            className: "chatControl__buttonShow",
             events: {
-                click: [toggleBind]
-            }
-        })
+                click: [toggleBind],
+            },
+        });
 
         const chatButtons = new ChatButtons({
-            className: 'chatControl__chatsControlButtons'
-        })
+            className: "chatControl__chatsControlButtons",
+        });
 
         this.children = {
             ...this.children,
             buttonShow,
-            chatButtons
-        }
+            chatButtons,
+        };
     }
 
     private _toggleMenu() {
-        this.setProps({showPanel: !this.props.showPanel})
+        this.setProps({ showPanel: !this.props.showPanel });
     }
 
     render(): string {
         return `
             <div class="chatMenu {{className}}">
                 {{{buttonShow}}}
-                ${this.props.showPanel ?
-            `
+                ${
+                    this.props.showPanel
+                        ? `
                         {{{chatButtons}}}
-                    ` :
-            ''
-        }
+                    `
+                        : ""
+                }
             </div>
-        `
+        `;
     }
 }
 
-export default Menu
+export default Menu;

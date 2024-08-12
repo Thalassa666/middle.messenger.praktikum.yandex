@@ -4,16 +4,20 @@ import Block from "./block";
 type Constructable<T = any> = new (...args: any[]) => T;
 
 type RouteProps = {
-    rootQuery: string
-}
+    rootQuery: string;
+};
 
 export default class Route<T = Record<string, unknown>> {
-    private _pathname: string
-    private _blockClass: Constructable<Block<Record<string, unknown>>>
-    private _block: Block<Record<string, unknown>> | null
-    private _props: T & RouteProps
+    private _pathname: string;
+    private _blockClass: Constructable<Block<Record<string, unknown>>>;
+    private _block: Block<Record<string, unknown>> | null;
+    private _props: T & RouteProps;
 
-    constructor(pathname: string, view: Constructable<Block<Record<string, unknown>>>, props: T & RouteProps) {
+    constructor(
+        pathname: string,
+        view: Constructable<Block<Record<string, unknown>>>,
+        props: T & RouteProps,
+    ) {
         this._pathname = pathname;
         this._blockClass = view;
         this._block = null;

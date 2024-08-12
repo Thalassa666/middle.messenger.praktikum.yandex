@@ -1,5 +1,5 @@
-import Block from '../../helpers/block.ts';
-import './main.css';
+import Block from "../../helpers/block";
+import "./main.css";
 
 class MainPage extends Block {
     constructor() {
@@ -18,7 +18,7 @@ class MainPage extends Block {
             <a page="error500">Error 500</a>
           </div>
         </nav>
-        `
+        `;
     }
 }
 

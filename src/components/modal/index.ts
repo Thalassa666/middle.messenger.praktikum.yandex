@@ -1,9 +1,9 @@
-import Block from '../../helpers/block.ts';
-import './modal.css';
-import ButtonForm from '../button';
-import InputForm from '../input';
-import UsersSearchList from '../userSearch';
-import { EventsType } from '../../types/types.ts';
+import Block from "../../helpers/block";
+import "./modal.css";
+import ButtonForm from "../button";
+import InputForm from "../input";
+import UsersSearchList from "../userSearch";
+import { EventsType } from "../../types/types";
 
 interface ModalType {
     buttonChange?: ButtonForm;
@@ -22,32 +22,31 @@ export interface ModalProps {
 
 class Modal extends Block<ModalType> {
     constructor(props: ModalProps) {
-        const clickEvent = props.clickButton || (() => {})
-        const changeEvent = props.changeInput || (() => {})
+        const clickEvent = props.clickButton || (() => {});
+        const changeEvent = props.changeInput || (() => {});
         super({
             ...props,
             buttonChange: new ButtonForm({
-                type: 'primary',
-                className: 'primary-btn',
-                text: props.buttonText || 'Создать',
+                type: "primary",
+                className: "primary-btn",
+                text: props.buttonText || "Создать",
                 events: {
-                    click: [clickEvent]
-                }
+                    click: [clickEvent],
+                },
             }),
             input: new InputForm({
                 name: props.name,
-                type: 'text',
-                placeholder: '',
+                type: "text",
+                placeholder: "",
                 events: {
-                    change: changeEvent ? [changeEvent] : []
-                }
+                    change: changeEvent ? [changeEvent] : [],
+                },
             }),
             usersSearchList: new UsersSearchList({
-                listClick: props.listClick
-            })
-        })
+                listClick: props.listClick,
+            }),
+        });
     }
-
 
     render(): string {
         return `
@@ -63,8 +62,8 @@ class Modal extends Block<ModalType> {
                 {{{usersSearchList}}}
             </form>
         </div>
-        `
+        `;
     }
 }
 
-export default Modal
+export default Modal;
