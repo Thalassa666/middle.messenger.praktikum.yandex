@@ -18,7 +18,7 @@ export const loadChats = async () => {
     try {
         const data = await chatsApi.getChats();
         const { response, status } = data;
-        const responseParse = JSON.parse(response);
+        const responseParse = JSON.parse(response as string);
         switch (status) {
             case 200:
                 store.set({ chats: responseParse });
@@ -47,14 +47,14 @@ export const createChat = async (title: CreateChat) => {
     try {
         const data = await chatsApi.createChat(title);
         const { response, status } = data;
-        const responseParse = JSON.parse(response);
+        const responseParse = JSON.parse(response as string);
         switch (status) {
             case 200:
-                loadChats();
+                await loadChats();
                 store.set({ createChatsError: null });
                 break;
             case 400:
-                loadChats();
+                await loadChats();
                 store.set({ createChatsError: responseParse });
                 break;
             case 401:
@@ -83,13 +83,13 @@ export const addUserToChat = async (userData: UsersRequest) => {
     try {
         const data = await chatsApi.addUserToChat(userData);
         const { response, status } = data;
-        const responseParse = JSON.parse(response);
+        const responseParse = JSON.parse(response as string);
         switch (status) {
             case 200:
                 store.set({ addUserToChatError: null });
                 break;
             case 400:
-                loadChats();
+                await loadChats();
                 store.set({ addUserToChatError: responseParse });
                 break;
             case 401:
@@ -116,13 +116,13 @@ export const deleteUserFromChat = async (userData: UsersRequest) => {
     try {
         const data = await chatsApi.deleteUserFromChat(userData);
         const { response, status } = data;
-        const responseParse = JSON.parse(response);
+        const responseParse = JSON.parse(response as string);
         switch (status) {
             case 200:
                 store.set({ deleteUserFromChatError: null });
                 break;
             case 400:
-                loadChats();
+                await loadChats();
                 store.set({ deleteUserFromChatError: responseParse });
                 break;
             case 401:
@@ -155,7 +155,7 @@ export const deleteChat = async (model: CreateChatResponse) => {
     try {
         const data = await chatsApi.deleteChat(model);
         const { response, status } = data;
-        const responseParse = JSON.parse(response);
+        const responseParse = JSON.parse(response as string);
         switch (status) {
             case 200:
                 store.set({ deleteChatError: null });
@@ -163,7 +163,7 @@ export const deleteChat = async (model: CreateChatResponse) => {
                 await loadChats();
                 break;
             case 400:
-                loadChats();
+                await loadChats();
                 store.set({ deleteChatError: responseParse });
                 break;
             case 401:

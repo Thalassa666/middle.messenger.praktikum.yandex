@@ -118,6 +118,7 @@ class LoginPage extends Block<LoginPageProps> {
             newProps.currentUser !== null
         ) {
             router.go(Routes.Chats);
+            return true;
         }
         return true;
     }

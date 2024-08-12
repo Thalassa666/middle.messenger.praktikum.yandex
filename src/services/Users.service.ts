@@ -15,7 +15,7 @@ const usersApi = new UsersApi();
 export const changeUserData = async (model: UserUpdateRequest) => {
     try {
         const { response, status } = await usersApi.changeUserData(model);
-        const responseParse = JSON.parse(response);
+        const responseParse = JSON.parse(response as string);
         switch (status) {
             case 200:
                 store.set({ currentUser: responseParse });
@@ -50,7 +50,7 @@ export const changeUserData = async (model: UserUpdateRequest) => {
 export const changePassword = async (model: ChangePasswordRequest) => {
     try {
         const { response, status } = await usersApi.changePassword(model);
-        const responseParse = JSON.parse(response);
+        const responseParse = JSON.parse(response as string);
         switch (status) {
             case 200:
                 store.set({ changePasswordError: null });
@@ -86,7 +86,7 @@ export const searchUsersByLogin = async (userData: FindUserRequest) => {
     try {
         const data = await usersApi.searchUsersByLogin(userData);
         const { response, status } = data;
-        const responseParse = JSON.parse(response);
+        const responseParse = JSON.parse(response as string);
         switch (status) {
             case 200:
                 store.set({ usersSearch: responseParse });
@@ -122,7 +122,7 @@ export const changeAvatar = async (userData: HTMLFormElement) => {
     try {
         const data = await usersApi.changeAvatar(userData);
         const { response, status } = data;
-        const responseParse = JSON.parse(response);
+        const responseParse = JSON.parse(response as string);
         switch (status) {
             case 200:
                 store.set({ currentUser: responseParse });
