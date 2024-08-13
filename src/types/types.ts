@@ -1,6 +1,6 @@
-import { WSTransport } from "../helpers/WSTransport.ts"
+import { WSTransport } from "../helpers/WSTransport";
 
-export type EventsType = Record<string, EventListenerOrEventListenerObject[]>
+export type EventsType = Record<string, EventListenerOrEventListenerObject[]>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Constructable<T = any> = new (...args: any[]) => T;
@@ -14,15 +14,15 @@ export type UserResponse = {
     login: string;
     avatar: string;
     email: string;
-}
+};
 
 export type CreateChat = {
     title: string;
-}
+};
 
 export type CreateChatResponse = {
     chatId: number;
-}
+};
 
 export type ChatsResponse = {
     id: number;
@@ -33,8 +33,8 @@ export type ChatsResponse = {
         user: UserResponse;
         time: string;
         content: string;
-    }
-}
+    };
+};
 
 export type ChatUserResponse = {
     id: number;
@@ -44,7 +44,7 @@ export type ChatUserResponse = {
     login: string;
     avatar: string;
     role: string;
-}
+};
 
 export type ChangeChatAvatarSubmitData = {
     chatId: number;
@@ -54,12 +54,12 @@ export type ChangeChatAvatarSubmitData = {
 export type UsersRequest = {
     users: number[];
     chatId: number;
-}
+};
 
 export type Login = {
     login: string;
     password: string;
-}
+};
 
 export type CreateUser = {
     first_name: string;
@@ -68,11 +68,11 @@ export type CreateUser = {
     email: string;
     password: string;
     phone: string;
-}
+};
 
 export type FindUserRequest = {
-    login: string
-}
+    login: string;
+};
 
 export type UserUpdateRequest = {
     first_name: string;
@@ -81,22 +81,22 @@ export type UserUpdateRequest = {
     login: string;
     email: string;
     phone: string;
-}
+};
 
 export type ChangePasswordRequest = {
     oldPassword: string;
     newPassword: string;
-}
+};
 
 export type ChatMessageType = {
     content?: string;
-    type: "message" | "get old" | 'ping';
-}
+    type: "message" | "get old" | "ping";
+};
 
 export type SocketType = {
-    chatId: number,
-    socket: WSTransport
-}
+    chatId: number;
+    socket: WSTransport;
+};
 
 export type Message = {
     id: number;
@@ -108,4 +108,4 @@ export type Message = {
     is_read: boolean;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     file?: any;
-}
+};

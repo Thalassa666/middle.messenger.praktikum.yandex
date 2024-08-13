@@ -1,5 +1,5 @@
-import './avatar.css';
-import Block from '../../helpers/block';
+import "./avatar.css";
+import Block from "../../helpers/block";
 import { EventsType } from "../../types/types.ts";
 
 export interface AvatarProps {
@@ -30,7 +30,7 @@ class Avatar extends Block<AvatarProps> {
           </div>
             <h2 class="profile__avatar_title">{{title}}</h2>
         </div>
-        `
+        `;
     }
 }
 

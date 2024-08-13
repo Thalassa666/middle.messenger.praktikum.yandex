@@ -1,7 +1,7 @@
-import Block from '../../helpers/block.ts';
-import './error.css';
-import '../../style.css';
-import ButtonForm from '../../components/button';
+import Block from "../../helpers/block";
+import "./error.css";
+import "../../style.css";
+import ButtonForm from "../../components/button";
 
 type ErrorPageProps = {
     code: string;
@@ -13,13 +13,11 @@ export default class ErrorPage extends Block<ErrorPageProps> {
         super({
             ...props,
             ButtonForm: new ButtonForm({
-                className: 'secondary-btn',
-                type: 'button',
-                text: 'Назад',
-                page: 'main',
-                events: {
-
-                }
+                className: "secondary-btn",
+                type: "button",
+                text: "Назад",
+                page: "main",
+                events: {},
             }),
         });
     }
@@ -33,6 +31,6 @@ export default class ErrorPage extends Block<ErrorPageProps> {
               {{{ ButtonForm }}}
           </div>
         </section>
-        `
+        `;
     }
 }

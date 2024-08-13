@@ -1,5 +1,5 @@
-import Block from '../../helpers/block';
-import { EventsType } from "../../types/types.ts";
+import Block from "../../helpers/block";
+import { EventsType } from "../../types/types";
 
 export interface InputFormProps {
     type: string;
@@ -7,7 +7,7 @@ export interface InputFormProps {
     value?: string;
     placeholder: string;
     className?: string;
-    events?: EventsType
+    events?: EventsType;
 }
 
 class InputForm extends Block<InputFormProps> {
@@ -15,7 +15,16 @@ class InputForm extends Block<InputFormProps> {
         super(props);
     }
 
+    _addEvents() {
+        super._addEvents();
 
+        const inputElement = this.getContent()?.querySelector("input");
+        if (inputElement && this.props.events?.blur) {
+            this.props.events.blur.forEach((func) => {
+                inputElement.addEventListener("blur", func);
+            });
+        }
+    }
 
     render(): string {
         return `
@@ -28,7 +37,7 @@ class InputForm extends Block<InputFormProps> {
            value="{{value}}"
            >
         </div>
-        `
+        `;
     }
 }
 

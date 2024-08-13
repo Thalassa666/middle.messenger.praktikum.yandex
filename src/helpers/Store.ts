@@ -1,14 +1,20 @@
-import { ChatUserResponse, ChatsResponse, Message, SocketType, UserResponse } from '../types/types.ts';
-import EventBus from './eventBus';
+import {
+    ChatUserResponse,
+    ChatsResponse,
+    Message,
+    SocketType,
+    UserResponse,
+} from "../types/types";
+import EventBus from "./eventBus";
 
 export enum StoreEvents {
-    Updated = 'Updated'
+    Updated = "Updated",
 }
 
 export type HttpErrorType = {
     reason: string;
     status?: number;
-}
+};
 
 export interface IState {
     loginError?: HttpErrorType | null;
@@ -19,7 +25,7 @@ export interface IState {
     activeChatUsers?: ChatUserResponse[];
     token?: string;
     sockets?: SocketType[];
-    messages?: Message[],
+    messages?: Message[];
 }
 
 export interface INextState {
@@ -32,7 +38,7 @@ export interface INextState {
     activeChatUsers?: ChatUserResponse[];
     token?: string;
     sockets?: SocketType[];
-    messages?: Message[],
+    messages?: Message[];
     loginError?: HttpErrorType | null;
     createUserError?: HttpErrorType | null;
     getUserError?: HttpErrorType | null;
@@ -54,13 +60,12 @@ const defaultState: IState = {
     activeChatUsers: [],
     sockets: [],
     messages: [],
-}
+};
 
 class Store extends EventBus {
-    // @ts-expect-error @typescript-eslint/ban-ts-comment
     private state: IState = defaultState;
 
-    private static __instance: Store
+    private static __instance: Store;
 
     constructor(defaultState: IState) {
         if (Store.__instance) {
@@ -87,4 +92,4 @@ class Store extends EventBus {
     }
 }
 
-export default new Store(defaultState)
+export default new Store(defaultState);

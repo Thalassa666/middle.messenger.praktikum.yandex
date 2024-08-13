@@ -1,11 +1,14 @@
-import './header.css';
-import { ChatsResponse, ChangeChatAvatarSubmitData } from "../../../types/types.ts";
-import { MapStateToProps, connect } from '../../../utils/connect.ts';
-import Block from '../../../helpers/block';
-import Menu from '../menu';
-import ChatAvatar from '../../chatBody/avatar/index.ts';
-import { updateChatAvatar } from '../../../services/Chats.service.ts';
-import { BASE_URL } from '../../../constants/constants.ts';
+import "./header.css";
+import {
+    ChatsResponse,
+    ChangeChatAvatarSubmitData,
+} from "../../../types/types";
+import { MapStateToProps, connect } from "../../../utils/connect";
+import Block from "../../../helpers/block";
+import Menu from "../menu";
+import ChatAvatar from "../../chatBody/avatar/index";
+import { updateChatAvatar } from "../../../services/Chats.service";
+import { BASE_URL } from "../../../constants/constants";
 
 export interface BodyHeaderProps {
     activeChat: ChatsResponse;
@@ -17,13 +20,15 @@ class BodyHeader extends Block<BodyHeaderProps> {
             ...props,
             Menu: new Menu({}),
             ChatAvatar: new ChatAvatar({
-                name: 'avatar',
-                title: 'ChatAvatar',
-                avatar: props.activeChat?.avatar ? `${BASE_URL}/resources${props.activeChat.avatar}` : 'icon/icon.svg',
+                name: "avatar",
+                title: "ChatAvatar",
+                avatar: props.activeChat?.avatar
+                    ? `${BASE_URL}/resources${props.activeChat.avatar}`
+                    : "icon/icon.svg",
                 changeAvatar: true,
                 events: {
-                    change: [(e: Event) => this.handleAvatarChange(e)]
-                }
+                    change: [(e: Event) => this.handleAvatarChange(e)],
+                },
             }),
         });
     }
@@ -35,25 +40,26 @@ class BodyHeader extends Block<BodyHeaderProps> {
         if (file && this.props.activeChat) {
             const formData: ChangeChatAvatarSubmitData = {
                 chatId: this.props.activeChat.id,
-                file
+                file,
             };
             await updateChatAvatar(formData);
         }
     }
 
-    componentDidUpdate(oldProps: BodyHeaderProps, newProps: BodyHeaderProps): boolean {
-            this.children.ChatAvatar.setProps({
-                avatar: newProps.activeChat?.avatar
-                    ? `${BASE_URL}/resources${newProps.activeChat?.avatar}`
-                    : 'icon/icon.svg'
-            });
-            console.log(newProps.activeChat.avatar, oldProps.activeChat?.avatar);
+    componentDidUpdate(
+        oldProps: BodyHeaderProps,
+        newProps: BodyHeaderProps,
+    ): boolean {
+        this.children.ChatAvatar.setProps({
+            avatar: newProps.activeChat?.avatar
+                ? `${BASE_URL}/resources${newProps.activeChat?.avatar}`
+                : "icon/icon.svg",
+        });
         if (oldProps.activeChat?.avatar !== newProps.activeChat?.avatar) {
-            console.log(newProps.activeChat.avatar, oldProps.activeChat?.avatar);
             this.children.ChatAvatar.setProps({
                 avatar: newProps.activeChat?.avatar
                     ? `${BASE_URL}/resources${newProps.activeChat?.avatar}`
-                    : 'icon/icon.svg',
+                    : "icon/icon.svg",
             });
             return true;
         }
@@ -65,7 +71,7 @@ class BodyHeader extends Block<BodyHeaderProps> {
         <div class="header-body">
             <form class="header-body__info">
                   {{{ChatAvatar}}}
-                  <p class="header-body__title">${this.props.activeChat?.title || ''}</p>
+                  <p class="header-body__title">${this.props.activeChat?.title || ""}</p>
             </form>
             <div class="header-body__button">
                 {{{Menu}}}
@@ -73,10 +79,10 @@ class BodyHeader extends Block<BodyHeaderProps> {
                 {{{ChatsButtons}}}
             </div>
         </div>
-        `
+        `;
     }
 }
 
-const mapStateToProps: MapStateToProps = ({activeChat }) => ({activeChat })
+const mapStateToProps: MapStateToProps = ({ activeChat }) => ({ activeChat });
 
 export default connect(mapStateToProps)(BodyHeader);

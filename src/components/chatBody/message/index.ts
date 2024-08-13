@@ -1,5 +1,5 @@
-import './message.css';
-import Block from '../../../helpers/block';
+import "./message.css";
+import Block from "../../../helpers/block";
 import ButtonForm from "../../button";
 import InputForm from "../../../components/input";
 
@@ -13,18 +13,18 @@ class ChatMessage extends Block<ChatMessageProps> {
         super({
             ...props,
             Message: new InputForm({
-                name: 'message',
-                type: 'text',
-                placeholder: 'сообщение',
-                className: 'message__form_input',
+                name: "message",
+                type: "text",
+                placeholder: "сообщение",
+                className: "message__form_input",
             }),
             SendButton: new ButtonForm({
-                text: '',
-                type: 'submit',
-                img: '/icon/arrow.svg',
-                className: 'message__form_btn',
+                text: "",
+                type: "submit",
+                img: "/icon/arrow.svg",
+                className: "message__form_btn",
                 events: {},
-            })
+            }),
         });
     }
 
@@ -42,7 +42,7 @@ class ChatMessage extends Block<ChatMessageProps> {
               {{{ SendButton }}}
           </form>
         </section>
-        `
+        `;
     }
 }
 

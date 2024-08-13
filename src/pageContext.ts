@@ -65,7 +65,13 @@ export interface SigninPageProps extends BasePageContext {
     confirmPasswordPlaceholder: string;
 }
 
-export type PageContext = BasePageContext | ProfilePageContext | ProfileChangeContext | ChatPageContext | LoginPageProps | SigninPageProps;
+export type PageContext =
+    | BasePageContext
+    | ProfilePageContext
+    | ProfileChangeContext
+    | ChatPageContext
+    | LoginPageProps
+    | SigninPageProps;
 
 export interface PageContextType {
     main: BasePageContext;
@@ -83,18 +89,18 @@ export const pageContexts: PageContextType = {
     main: {},
     login: {
         page: "signin",
-        loginPlaceholder: 'логин',
-        passwordPlaceholder: 'пароль',
+        loginPlaceholder: "логин",
+        passwordPlaceholder: "пароль",
     },
     signin: {
         page: "login",
-        emailPlaceholder: 'почта',
-        loginPlaceholder: 'логин',
-        firstNamePlaceholder: 'имя',
-        secondNamePlaceholder: 'фамилия',
-        phonePlaceholder: 'телефон',
-        passwordPlaceholder: 'пароль',
-        confirmPasswordPlaceholder: 'пароль еще раз',
+        emailPlaceholder: "почта",
+        loginPlaceholder: "логин",
+        firstNamePlaceholder: "имя",
+        secondNamePlaceholder: "фамилия",
+        phonePlaceholder: "телефон",
+        passwordPlaceholder: "пароль",
+        confirmPasswordPlaceholder: "пароль еще раз",
     },
     error404: {
         error: "404",
@@ -113,7 +119,7 @@ export const pageContexts: PageContextType = {
         login: "johndoe",
         first_name: "John",
         second_name: "Doe",
-        phone: "+56661234567"
+        phone: "+56661234567",
     },
     profileChange: {
         avatarUrl: "/icon/avatar.svg",
@@ -123,34 +129,77 @@ export const pageContexts: PageContextType = {
         first_name: "John",
         second_name: "Doe",
         display_name: "JohnDoe",
-        phone: "+56661234567"
+        phone: "+56661234567",
     },
     profileChangePass: {
         title: "John Doe",
         avatarUrl: "/icon/avatar.svg",
         oldPassword: "password",
-        newPassword: "password"
+        newPassword: "password",
     },
     chat: {
         chatItems: [
-            { title: "Jane Doe", text: "Привет, как дела?", image: "/icon/icon.svg", date: "15:30", badge: "3" },
-            { title: "Колян", text: "Займи денег плиз", image: "/icon/icon.svg", date: "10:01" },
-            { title: "Петя", text: "Бро го катку", image: "/icon/icon.svg", date: "Пт", active: true },
-            { title: "Автомеханик", text: "Здравствуйте, вы звонили по поводу ремонта? Перезвоните", image: "/icon/icon.svg", date: "Чт", badge: "1" },
-            { title: "Мама", text: "Вы: Стикер", image: "/icon/icon.svg", date: "Ср" },
-            { title: "Лена", text: "Вы: Привет", image: "/icon/icon.svg", date: "Вт" },
-            { title: "Mary", text: "Вы: Стикер", image: "/icon/icon.svg", date: "Пн" },
-            { title: "SpiderMan", text: "Стикер", image: "/icon/icon.svg", date: "Пн" },
+            {
+                title: "Jane Doe",
+                text: "Привет, как дела?",
+                image: "/icon/icon.svg",
+                date: "15:30",
+                badge: "3",
+            },
+            {
+                title: "Колян",
+                text: "Займи денег плиз",
+                image: "/icon/icon.svg",
+                date: "10:01",
+            },
+            {
+                title: "Петя",
+                text: "Бро го катку",
+                image: "/icon/icon.svg",
+                date: "Пт",
+                active: true,
+            },
+            {
+                title: "Автомеханик",
+                text: "Здравствуйте, вы звонили по поводу ремонта? Перезвоните",
+                image: "/icon/icon.svg",
+                date: "Чт",
+                badge: "1",
+            },
+            {
+                title: "Мама",
+                text: "Вы: Стикер",
+                image: "/icon/icon.svg",
+                date: "Ср",
+            },
+            {
+                title: "Лена",
+                text: "Вы: Привет",
+                image: "/icon/icon.svg",
+                date: "Вт",
+            },
+            {
+                title: "Mary",
+                text: "Вы: Стикер",
+                image: "/icon/icon.svg",
+                date: "Пн",
+            },
+            {
+                title: "SpiderMan",
+                text: "Стикер",
+                image: "/icon/icon.svg",
+                date: "Пн",
+            },
         ],
         bodyHeader: { title: "Петя", image: "/icon/icon.svg" },
         chatBody: {
-            date: '06 марта',
+            date: "06 марта",
             messages: [
-                { text: 'Бро го катку', isMine: false },
-                { text: 'Нам нужен сап, ждем ток тебя', isMine: false },
-                { text: 'Ща', isMine: true },
-                { text: 'Залетай в дс', isMine: false },
-            ]
+                { text: "Бро го катку", isMine: false },
+                { text: "Нам нужен сап, ждем ток тебя", isMine: false },
+                { text: "Ща", isMine: true },
+                { text: "Залетай в дс", isMine: false },
+            ],
         },
-    }
+    },
 };

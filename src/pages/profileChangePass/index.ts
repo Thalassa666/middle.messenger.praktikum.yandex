@@ -1,18 +1,18 @@
-import Block from '../../helpers/block';
-import '../profile/profile.css';
-import '../../style.css';
-import Avatar from '../../components/avatar';
-import ButtonForm from '../../components/button';
+import Block from "../../helpers/block";
+import "../profile/profile.css";
+import "../../style.css";
+import Avatar from "../../components/avatar";
+import ButtonForm from "../../components/button";
 import { passwordValidation } from "../../helpers/validation.ts";
 import ProfileInput from "../../components/profileInput";
-import { ChangePasswordRequest, UserResponse } from "types/types.ts";
-import { changePassword } from '../../services/Users.service.ts';
-import { getModel } from '../../utils/model.ts';
-import Router from '../../helpers/Router.ts';
-import { Routes } from '../../main.ts';
-import { me } from '../../services/Auth.service.ts';
-import { connect, MapStateToProps } from '../../utils/connect.ts';
-import { BASE_URL } from '../../constants/constants.ts';
+import { ChangePasswordRequest, UserResponse } from "../../types/types";
+import { changePassword } from "../../services/Users.service";
+import { getModel } from "../../utils/model";
+import Router from "../../helpers/Router";
+import { Routes } from "../../main";
+import { me } from "../../services/Auth.service";
+import { connect, MapStateToProps } from "../../utils/connect";
+import { BASE_URL } from "../../constants/constants";
 
 const router = Router;
 
@@ -27,9 +27,11 @@ class ProfileChangePass extends Block<ProfileChangePassProps> {
         super({
             ...props,
             Avatar: new Avatar({
-                name: 'Avatar',
-                title: props.currentUser?.display_name || '',
-                avatar: props.currentUser?.avatar ? `${BASE_URL}/resources${props.currentUser.avatar}` : '',
+                name: "Avatar",
+                title: props.currentUser?.display_name || "",
+                avatar: props.currentUser?.avatar
+                    ? `${BASE_URL}/resources${props.currentUser.avatar}`
+                    : "",
                 changeAvatar: false,
             }),
         });
@@ -37,49 +39,49 @@ class ProfileChangePass extends Block<ProfileChangePassProps> {
 
     init(): void {
         const getUserInfo = async () => {
-            if (this.props.currentUser === null) await me()
-        }
+            if (this.props.currentUser === null) await me();
+        };
         getUserInfo();
 
         const OldPasswordInput = new ProfileInput({
-            label: 'старый пароль',
-            profileInputType: 'password',
+            label: "старый пароль",
+            profileInputType: "password",
             profileInputValue: this.props.oldPassword,
-            name: 'oldPassword',
+            name: "oldPassword",
             isReadOnly: false,
             events: {
-                blur: [passwordValidation]
-            }
+                blur: [passwordValidation],
+            },
         });
         const NewPasswordInput = new ProfileInput({
-            label: 'новый пароль',
-            profileInputType: 'password',
+            label: "новый пароль",
+            profileInputType: "password",
             profileInputValue: this.props.newPassword,
-            name: 'newPassword',
+            name: "newPassword",
             isReadOnly: false,
             events: {
-                blur: [passwordValidation]
-            }
+                blur: [passwordValidation],
+            },
         });
         const ConfirmPasswordInput = new ProfileInput({
-            label: 'еще раз',
-            profileInputType: 'password',
+            label: "еще раз",
+            profileInputType: "password",
             profileInputValue: this.props.newPassword,
-            name: 'confirmPassword',
+            name: "confirmPassword",
             isReadOnly: false,
             events: {
-                blur: [passwordValidation]
-            }
+                blur: [passwordValidation],
+            },
         });
         const SaveButton = new ButtonForm({
-            className: 'primary-btn',
-            text: 'Сохранить пароль',
-            type: 'submit',
-            page: 'settings',
+            className: "primary-btn",
+            text: "Сохранить пароль",
+            type: "submit",
+            page: "settings",
             events: {
-                click: [this.handleSave]
-            }
-        })
+                click: [this.handleSave],
+            },
+        });
 
         this.children = {
             ...this.children,
@@ -87,40 +89,42 @@ class ProfileChangePass extends Block<ProfileChangePassProps> {
             NewPasswordInput,
             ConfirmPasswordInput,
             SaveButton,
-        }
+        };
     }
 
     handleSave(e: Event) {
         e.preventDefault();
         passwordValidation;
 
-        const form = (e.target as HTMLElement).closest('form');
+        const form = (e.target as HTMLElement).closest("form");
         if (!form) return;
 
-        const inputs = form.querySelectorAll('input');
+        const inputs = form.querySelectorAll("input");
         let isFormValid = true;
 
-        inputs.forEach(input => {
-            const blurEvent = new FocusEvent('blur', { relatedTarget: input });
+        inputs.forEach((input) => {
+            const blurEvent = new FocusEvent("blur", { relatedTarget: input });
             input.dispatchEvent(blurEvent);
 
-            if (input.classList.contains('input-error')) {
+            if (input.classList.contains("input-error")) {
                 isFormValid = false;
             }
         });
 
         if (isFormValid) {
-            changePassword({ ...getModel(e) as ChangePasswordRequest });
+            changePassword({ ...(getModel(e) as ChangePasswordRequest) });
             router.go(Routes.Profile);
         } else {
-            console.log('error form validation');
+            console.log("error form validation");
         }
     }
 
     componentDidUpdate(): boolean {
         this.children.Avatar.setProps({
-            title: this.props.currentUser?.display_name || '',
-            avatar: this.props.currentUser?.avatar ? `${BASE_URL}/resources/${this.props.currentUser.avatar}` : '',
+            title: this.props.currentUser?.display_name || "",
+            avatar: this.props.currentUser?.avatar
+                ? `${BASE_URL}/resources/${this.props.currentUser.avatar}`
+                : "",
         });
         return true;
     }
@@ -140,10 +144,10 @@ class ProfileChangePass extends Block<ProfileChangePassProps> {
                 </form>
             </div>
         </section>
-        `
+        `;
     }
 }
 
-const mapStateToProps: MapStateToProps = ({currentUser}) => ({currentUser});
+const mapStateToProps: MapStateToProps = ({ currentUser }) => ({ currentUser });
 
 export default connect(mapStateToProps)(ProfileChangePass);

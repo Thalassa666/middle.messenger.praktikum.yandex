@@ -1,18 +1,18 @@
-import Block from '../../helpers/block.ts';
-import './buttonAdd.css';
+import Block from "../../helpers/block.ts";
+import "./buttonAdd.css";
 import { EventsType } from "../../types/types";
 
 type ButtonAddProps = {
     events?: EventsType;
     className?: string;
     title?: string;
-}
+};
 
 class ButtonAdd extends Block<ButtonAddProps> {
     constructor(props: ButtonAddProps) {
         super({
-            ...props
-        })
+            ...props,
+        });
     }
 
     render(): string {
@@ -26,8 +26,8 @@ class ButtonAdd extends Block<ButtonAddProps> {
                 </div>
                 {{title}}
             </div>
-        `
+        `;
     }
 }
 
-export default ButtonAdd
+export default ButtonAdd;
